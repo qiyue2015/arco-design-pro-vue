@@ -1,7 +1,7 @@
 module.exports = {
   tabWidth: 2,
   semi: true,
-  printWidth: 80,
+  printWidth: 120,
   singleQuote: true,
   quoteProps: 'consistent',
   htmlWhitespaceSensitivity: 'strict',
