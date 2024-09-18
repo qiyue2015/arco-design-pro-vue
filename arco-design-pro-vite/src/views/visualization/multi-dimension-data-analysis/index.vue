@@ -1,16 +1,9 @@
 <template>
   <div class="container">
-    <Breadcrumb
-      :items="[
-        'menu.visualization',
-        'menu.visualization.multiDimensionDataAnalysis',
-      ]"
-    />
+    <Breadcrumb :items="['menu.visualization', 'menu.visualization.multiDimensionDataAnalysis']" />
     <a-space direction="vertical" :size="16" fill>
       <a-grid :cols="24" :col-gap="16" :row-gap="16">
-        <a-grid-item
-          :span="{ xs: 24, sm: 24, md: 24, lg: 18, xl: 18, xxl: 18 }"
-        >
+        <a-grid-item :span="{ xs: 24, sm: 24, md: 24, lg: 18, xl: 18, xxl: 18 }">
           <DataOverview />
         </a-grid-item>
         <a-grid-item :span="{ xs: 24, sm: 24, md: 24, lg: 6, xl: 6, xxl: 6 }">

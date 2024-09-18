@@ -1,27 +1,12 @@
 <template>
   <a-spin :loading="loading" style="width: 100%">
-    <a-card
-      class="general-card"
-      :title="$t('multiDAnalysis.card.title.dataOverview')"
-    >
+    <a-card class="general-card" :title="$t('multiDAnalysis.card.title.dataOverview')">
       <a-row justify="space-between">
         <a-col v-for="(item, idx) in renderData" :key="idx" :span="6">
-          <a-statistic
-            :title="item.title"
-            :value="item.value"
-            show-group-separator
-            :value-from="0"
-            animation
-          >
+          <a-statistic :title="item.title" :value="item.value" show-group-separator :value-from="0" animation>
             <template #prefix>
-              <span
-                class="statistic-prefix"
-                :style="{ background: item.prefix.background }"
-              >
-                <component
-                  :is="item.prefix.icon"
-                  :style="{ color: item.prefix.iconColor }"
-                />
+              <span class="statistic-prefix" :style="{ background: item.prefix.background }">
+                <component :is="item.prefix.icon" :style="{ color: item.prefix.iconColor }" />
               </span>
             </template>
           </a-statistic>
@@ -47,9 +32,7 @@
       .map(
         (el) => `<div class="content-panel">
         <p>
-          <span style="background-color: ${
-            el.color
-          }" class="tooltip-item-icon"></span><span>${el.seriesName}</span>
+          <span style="background-color: ${el.color}" class="tooltip-item-icon"></span><span>${el.seriesName}</span>
         </p>
         <span class="tooltip-value">${el.value?.toLocaleString()}</span>
       </div>`
@@ -233,30 +216,10 @@
         ],
       },
       series: [
-        generateSeries(
-          '内容生产量',
-          '#722ED1',
-          '#F5E8FF',
-          contentProductionData.value
-        ),
-        generateSeries(
-          '内容点击量',
-          '#F77234',
-          '#FFE4BA',
-          contentClickData.value
-        ),
-        generateSeries(
-          '内容曝光量',
-          '#33D1C9',
-          '#E8FFFB',
-          contentExposureData.value
-        ),
-        generateSeries(
-          '活跃用户数',
-          '#3469FF',
-          '#E8F3FF',
-          activeUsersData.value
-        ),
+        generateSeries('内容生产量', '#722ED1', '#F5E8FF', contentProductionData.value),
+        generateSeries('内容点击量', '#F77234', '#FFE4BA', contentClickData.value),
+        generateSeries('内容曝光量', '#33D1C9', '#E8FFFB', contentExposureData.value),
+        generateSeries('活跃用户数', '#3469FF', '#E8F3FF', activeUsersData.value),
       ],
     };
   });

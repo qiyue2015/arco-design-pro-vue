@@ -12,29 +12,17 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item
-                  field="number"
-                  :label="$t('searchTable.form.number')"
-                >
-                  <a-input
-                    v-model="formModel.number"
-                    :placeholder="$t('searchTable.form.number.placeholder')"
-                  />
+                <a-form-item field="number" :label="$t('searchTable.form.number')">
+                  <a-input v-model="formModel.number" :placeholder="$t('searchTable.form.number.placeholder')" />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item field="name" :label="$t('searchTable.form.name')">
-                  <a-input
-                    v-model="formModel.name"
-                    :placeholder="$t('searchTable.form.name.placeholder')"
-                  />
+                  <a-input v-model="formModel.name" :placeholder="$t('searchTable.form.name.placeholder')" />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item
-                  field="contentType"
-                  :label="$t('searchTable.form.contentType')"
-                >
+                <a-form-item field="contentType" :label="$t('searchTable.form.contentType')">
                   <a-select
                     v-model="formModel.contentType"
                     :options="contentTypeOptions"
@@ -43,10 +31,7 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item
-                  field="filterType"
-                  :label="$t('searchTable.form.filterType')"
-                >
+                <a-form-item field="filterType" :label="$t('searchTable.form.filterType')">
                   <a-select
                     v-model="formModel.filterType"
                     :options="filterTypeOptions"
@@ -55,21 +40,12 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item
-                  field="createdTime"
-                  :label="$t('searchTable.form.createdTime')"
-                >
-                  <a-range-picker
-                    v-model="formModel.createdTime"
-                    style="width: 100%"
-                  />
+                <a-form-item field="createdTime" :label="$t('searchTable.form.createdTime')">
+                  <a-range-picker v-model="formModel.createdTime" style="width: 100%" />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item
-                  field="status"
-                  :label="$t('searchTable.form.status')"
-                >
+                <a-form-item field="status" :label="$t('searchTable.form.status')">
                   <a-select
                     v-model="formModel.status"
                     :options="statusOptions"
@@ -117,10 +93,7 @@
             </a-upload>
           </a-space>
         </a-col>
-        <a-col
-          :span="12"
-          style="display: flex; align-items: center; justify-content: end"
-        >
+        <a-col :span="12" style="display: flex; align-items: center; justify-content: end">
           <a-button>
             <template #icon>
               <icon-download />
@@ -128,9 +101,7 @@
             {{ $t('searchTable.operation.download') }}
           </a-button>
           <a-tooltip :content="$t('searchTable.actions.refresh')">
-            <div class="action-icon" @click="search"
-              ><icon-refresh size="18"
-            /></div>
+            <div class="action-icon" @click="search"><icon-refresh size="18" /></div>
           </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
             <a-tooltip :content="$t('searchTable.actions.density')">
@@ -148,29 +119,16 @@
             </template>
           </a-dropdown>
           <a-tooltip :content="$t('searchTable.actions.columnSetting')">
-            <a-popover
-              trigger="click"
-              position="bl"
-              @popup-visible-change="popupVisibleChange"
-            >
+            <a-popover trigger="click" position="bl" @popup-visible-change="popupVisibleChange">
               <div class="action-icon"><icon-settings size="18" /></div>
               <template #content>
                 <div id="tableSetting">
-                  <div
-                    v-for="(item, index) in showColumns"
-                    :key="item.dataIndex"
-                    class="setting"
-                  >
+                  <div v-for="(item, index) in showColumns" :key="item.dataIndex" class="setting">
                     <div style="margin-right: 4px; cursor: move">
                       <icon-drag-arrow />
                     </div>
                     <div>
-                      <a-checkbox
-                        v-model="item.checked"
-                        @change="
-                          handleChange($event, item as TableColumnData, index)
-                        "
-                      >
+                      <a-checkbox v-model="item.checked" @change="handleChange($event, item as TableColumnData, index)">
                       </a-checkbox>
                     </div>
                     <div class="title">
@@ -198,21 +156,13 @@
         </template>
         <template #contentType="{ record }">
           <a-space>
-            <a-avatar
-              v-if="record.contentType === 'img'"
-              :size="16"
-              shape="square"
-            >
+            <a-avatar v-if="record.contentType === 'img'" :size="16" shape="square">
               <img
                 alt="avatar"
                 src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/581b17753093199839f2e327e726b157.svg~tplv-49unhts6dw-image.image"
               />
             </a-avatar>
-            <a-avatar
-              v-else-if="record.contentType === 'horizontalVideo'"
-              :size="16"
-              shape="square"
-            >
+            <a-avatar v-else-if="record.contentType === 'horizontalVideo'" :size="16" shape="square">
               <img
                 alt="avatar"
                 src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/77721e365eb2ab786c889682cbc721c1.svg~tplv-49unhts6dw-image.image"
@@ -379,9 +329,7 @@
       value: 'offline',
     },
   ]);
-  const fetchData = async (
-    params: PolicyParams = { current: 1, pageSize: 20 }
-  ) => {
+  const fetchData = async (params: PolicyParams = { current: 1, pageSize: 20 }) => {
     setLoading(true);
     try {
       const { data } = await queryPolicyList(params);
@@ -410,41 +358,23 @@
     formModel.value = generateFormModel();
   };
 
-  const handleSelectDensity = (
-    val: string | number | Record<string, any> | undefined,
-    e: Event
-  ) => {
+  const handleSelectDensity = (val: string | number | Record<string, any> | undefined, e: Event) => {
     size.value = val as SizeProps;
   };
 
-  const handleChange = (
-    checked: boolean | (string | boolean | number)[],
-    column: Column,
-    index: number
-  ) => {
+  const handleChange = (checked: boolean | (string | boolean | number)[], column: Column, index: number) => {
     if (!checked) {
-      cloneColumns.value = showColumns.value.filter(
-        (item) => item.dataIndex !== column.dataIndex
-      );
+      cloneColumns.value = showColumns.value.filter((item) => item.dataIndex !== column.dataIndex);
     } else {
       cloneColumns.value.splice(index, 0, column);
     }
   };
 
-  const exchangeArray = <T extends Array<any>>(
-    array: T,
-    beforeIdx: number,
-    newIdx: number,
-    isDeep = false
-  ): T => {
+  const exchangeArray = <T extends Array<any>>(array: T, beforeIdx: number, newIdx: number, isDeep = false): T => {
     const newArray = isDeep ? cloneDeep(array) : array;
     if (beforeIdx > -1 && newIdx > -1) {
       // 先替换后面的，然后拿到替换的结果替换前面的
-      newArray.splice(
-        beforeIdx,
-        1,
-        newArray.splice(newIdx, 1, newArray[beforeIdx]).pop()
-      );
+      newArray.splice(beforeIdx, 1, newArray.splice(newIdx, 1, newArray[beforeIdx]).pop());
     }
     return newArray;
   };

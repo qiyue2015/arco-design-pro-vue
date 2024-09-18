@@ -58,10 +58,7 @@ export interface PublicOpinionAnalysisRes {
   chartData: ChartDataRecord[];
 }
 export function queryPublicOpinionAnalysis(data: DataChainGrowth) {
-  return axios.post<PublicOpinionAnalysisRes>(
-    '/api/public-opinion-analysis',
-    data
-  );
+  return axios.post<PublicOpinionAnalysisRes>('/api/public-opinion-analysis', data);
 }
 export interface DataOverviewRes {
   xAxis: string[];

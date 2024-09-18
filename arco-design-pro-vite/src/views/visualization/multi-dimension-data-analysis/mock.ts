@@ -11,9 +11,7 @@ setupMock({
           xAxis: new Array(12).fill(0).map((_item, index) => `${index + 1}日`),
           data: {
             name: quota,
-            value: new Array(12)
-              .fill(0)
-              .map(() => Mock.Random.natural(1000, 3000)),
+            value: new Array(12).fill(0).map(() => Mock.Random.natural(1000, 3000)),
           },
         };
       };

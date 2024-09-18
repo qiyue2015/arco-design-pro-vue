@@ -17,9 +17,7 @@
           {{ $t('monitor.chat.options.all') }}
         </a-option>
       </a-select>
-      <a-input-search
-        :placeholder="$t('monitor.chat.placeholder.searchCategory')"
-      />
+      <a-input-search :placeholder="$t('monitor.chat.placeholder.searchCategory')" />
       <a-button type="text">
         <icon-download />
       </a-button>

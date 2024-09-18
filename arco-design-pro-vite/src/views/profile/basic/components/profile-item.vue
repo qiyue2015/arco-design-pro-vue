@@ -57,10 +57,7 @@
     const { renderData } = props;
     const result = [];
     result.push({
-      title:
-        props.type === 'pre'
-          ? t('basicProfile.title.preVideo')
-          : t('basicProfile.title.video'),
+      title: props.type === 'pre' ? t('basicProfile.title.preVideo') : t('basicProfile.title.video'),
       data: [
         {
           label: t('basicProfile.label.video.mode'),
@@ -102,10 +99,7 @@
     });
 
     result.push({
-      title:
-        props.type === 'pre'
-          ? t('basicProfile.title.preAudio')
-          : t('basicProfile.title.audio'),
+      title: props.type === 'pre' ? t('basicProfile.title.preAudio') : t('basicProfile.title.audio'),
       data: [
         {
           label: t('basicProfile.label.audio.mode'),
@@ -113,15 +107,11 @@
         },
         {
           label: t('basicProfile.label.audio.acquisition.channels'),
-          value: `${renderData?.audio?.acquisition.channels || '-'} ${t(
-            'basicProfile.unit.audio.channels'
-          )}`,
+          value: `${renderData?.audio?.acquisition.channels || '-'} ${t('basicProfile.unit.audio.channels')}`,
         },
         {
           label: t('basicProfile.label.audio.encoding.channels'),
-          value: `${renderData?.audio?.encoding.channels || '-'} ${t(
-            'basicProfile.unit.audio.channels'
-          )}`,
+          value: `${renderData?.audio?.encoding.channels || '-'} ${t('basicProfile.unit.audio.channels')}`,
         },
         {
           label: t('basicProfile.label.audio.encoding.rate'),

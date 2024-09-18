@@ -1,8 +1,5 @@
 <template>
-  <a-card
-    class="general-card"
-    :title="$t('multiDAnalysis.card.title.userActions')"
-  >
+  <a-card class="general-card" :title="$t('multiDAnalysis.card.title.userActions')">
     <Chart height="122px" :option="chartOption" />
   </a-card>
 </template>

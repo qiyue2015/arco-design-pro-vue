@@ -16,10 +16,7 @@
   import { ref } from 'vue';
   import { ToolTipFormatterParams } from '@/types/echarts';
   import useLoading from '@/hooks/loading';
-  import {
-    queryContentPublish,
-    ContentPublishRecord,
-  } from '@/api/visualization';
+  import { queryContentPublish, ContentPublishRecord } from '@/api/visualization';
   import useChartOption from '@/hooks/chart-option';
 
   const tooltipItemsHtmlString = (items: ToolTipFormatterParams[]) => {
@@ -27,9 +24,7 @@
       .map(
         (el) => `<div class="content-panel">
     <p>
-      <span style="background-color: ${
-        el.color
-      }" class="tooltip-item-icon"></span>
+      <span style="background-color: ${el.color}" class="tooltip-item-icon"></span>
       <span>
       ${el.seriesName}
       </span>

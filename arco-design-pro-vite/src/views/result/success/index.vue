@@ -21,30 +21,13 @@
       </a-result>
 
       <div class="steps-wrapper">
-        <a-typography-paragraph bold>{{
-          $t('success.result.progress')
-        }}</a-typography-paragraph>
+        <a-typography-paragraph bold>{{ $t('success.result.progress') }}</a-typography-paragraph>
         <a-steps type="dot" :current="2">
-          <a-step
-            :title="$t('success.submitApplication')"
-            description="2020/10/10 14:00:39"
-          />
-          <a-step
-            :title="$t('success.leaderReview')"
-            :description="$t('success.processing')"
-          />
-          <a-step
-            :title="$t('success.purchaseCertificate')"
-            :description="$t('success.waiting')"
-          />
-          <a-step
-            :title="$t('success.safetyTest')"
-            :description="$t('success.waiting')"
-          />
-          <a-step
-            :title="$t('success.launched')"
-            :description="$t('success.waiting')"
-          />
+          <a-step :title="$t('success.submitApplication')" description="2020/10/10 14:00:39" />
+          <a-step :title="$t('success.leaderReview')" :description="$t('success.processing')" />
+          <a-step :title="$t('success.purchaseCertificate')" :description="$t('success.waiting')" />
+          <a-step :title="$t('success.safetyTest')" :description="$t('success.waiting')" />
+          <a-step :title="$t('success.launched')" :description="$t('success.waiting')" />
         </a-steps>
       </div>
     </div>

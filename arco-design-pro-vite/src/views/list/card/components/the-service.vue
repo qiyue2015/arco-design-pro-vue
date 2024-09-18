@@ -48,10 +48,7 @@
   import CardWrap from './card-wrap.vue';
 
   const defaultValue: ServiceRecord[] = new Array(4).fill({});
-  const { loading, response: renderData } = useRequest<ServiceRecord[]>(
-    queryTheServiceList,
-    defaultValue
-  );
+  const { loading, response: renderData } = useRequest<ServiceRecord[]>(queryTheServiceList, defaultValue);
 </script>
 
 <style scoped lang="less"></style>

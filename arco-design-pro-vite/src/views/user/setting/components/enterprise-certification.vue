@@ -22,11 +22,7 @@
     >
       <template #label="{ label }">{{ $t(label) }} :</template>
       <template #value="{ value, data }">
-        <a-tag
-          v-if="data.label === 'userSetting.certification.label.status'"
-          color="green"
-          size="small"
-        >
+        <a-tag v-if="data.label === 'userSetting.certification.label.status'" color="green" size="small">
           已认证
         </a-tag>
         <span v-else>{{ value }}</span>

@@ -21,10 +21,7 @@
 <script lang="ts" setup>
   import { computed, h, compile } from 'vue';
   import { useI18n } from 'vue-i18n';
-  import type {
-    TableColumnData,
-    TableData,
-  } from '@arco-design/web-vue/es/table/interface.d';
+  import type { TableColumnData, TableData } from '@arco-design/web-vue/es/table/interface.d';
 
   interface PreviewRecord {
     cover: string;
@@ -59,26 +56,14 @@
     return [
       {
         title: t('monitor.list.title.order'),
-        render({
-          rowIndex,
-        }: {
-          record: TableData;
-          column: TableColumnData;
-          rowIndex: number;
-        }) {
+        render({ rowIndex }: { record: TableData; column: TableColumnData; rowIndex: number }) {
           const tmp = `<span>${rowIndex + 1}</span>`;
           return h(compile(tmp));
         },
       },
       {
         title: t('monitor.list.title.cover'),
-        render({
-          record,
-        }: {
-          record: TableData;
-          column: TableColumnData;
-          rowIndex: number;
-        }) {
+        render({ record }: { record: TableData; column: TableColumnData; rowIndex: number }) {
           const tmp = `<div class='data-statistic-list-cover-wrapper'>
               <img src=${record.cover} />
               ${renderTag(record.status)}

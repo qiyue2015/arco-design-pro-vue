@@ -1,11 +1,5 @@
 <template>
-  <a-form
-    ref="formRef"
-    :model="formData"
-    class="form"
-    :label-col-props="{ span: 8 }"
-    :wrapper-col-props="{ span: 16 }"
-  >
+  <a-form ref="formRef" :model="formData" class="form" :label-col-props="{ span: 8 }" :wrapper-col-props="{ span: 16 }">
     <a-form-item
       field="email"
       :label="$t('userSetting.basicInfo.form.label.email')"
@@ -16,10 +10,7 @@
         },
       ]"
     >
-      <a-input
-        v-model="formData.email"
-        :placeholder="$t('userSetting.basicInfo.placeholder.email')"
-      />
+      <a-input v-model="formData.email" :placeholder="$t('userSetting.basicInfo.placeholder.email')" />
     </a-form-item>
     <a-form-item
       field="nickname"
@@ -31,10 +22,7 @@
         },
       ]"
     >
-      <a-input
-        v-model="formData.nickname"
-        :placeholder="$t('userSetting.basicInfo.placeholder.nickname')"
-      />
+      <a-input v-model="formData.nickname" :placeholder="$t('userSetting.basicInfo.placeholder.nickname')" />
     </a-form-item>
     <a-form-item
       field="countryRegion"
@@ -46,10 +34,7 @@
         },
       ]"
     >
-      <a-select
-        v-model="formData.countryRegion"
-        :placeholder="$t('userSetting.basicInfo.placeholder.area')"
-      >
+      <a-select v-model="formData.countryRegion" :placeholder="$t('userSetting.basicInfo.placeholder.area')">
         <a-option value="China">中国</a-option>
       </a-select>
     </a-form-item>
@@ -87,14 +72,8 @@
         allow-clear
       />
     </a-form-item>
-    <a-form-item
-      field="address"
-      :label="$t('userSetting.basicInfo.form.label.address')"
-    >
-      <a-input
-        v-model="formData.address"
-        :placeholder="$t('userSetting.basicInfo.placeholder.address')"
-      />
+    <a-form-item field="address" :label="$t('userSetting.basicInfo.form.label.address')">
+      <a-input v-model="formData.address" :placeholder="$t('userSetting.basicInfo.placeholder.address')" />
     </a-form-item>
     <a-form-item
       field="profile"
@@ -107,10 +86,7 @@
       ]"
       row-class="keep-margin"
     >
-      <a-textarea
-        v-model="formData.profile"
-        :placeholder="$t('userSetting.basicInfo.placeholder.profile')"
-      />
+      <a-textarea v-model="formData.profile" :placeholder="$t('userSetting.basicInfo.placeholder.profile')" />
     </a-form-item>
     <a-form-item>
       <a-space>

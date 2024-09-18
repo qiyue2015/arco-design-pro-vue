@@ -1,16 +1,11 @@
 <template>
-  <a-card
-    class="general-card"
-    :title="$t('monitor.studioStatus.title.studioStatus')"
-  >
+  <a-card class="general-card" :title="$t('monitor.studioStatus.title.studioStatus')">
     <template #extra>
       <a-tag color="green">{{ $t('monitor.studioStatus.smooth') }}</a-tag>
     </template>
     <a-descriptions layout="horizontal" :data="dataStatus" :column="2">
       <template #label="{ label }">
-        <span
-          v-if="['mainstream', 'hotStandby', 'coldStandby'].includes(label)"
-        >
+        <span v-if="['mainstream', 'hotStandby', 'coldStandby'].includes(label)">
           <a-typography-text style="padding-right: 8px">
             {{ $t(`monitor.studioStatus.${label}`) }}
           </a-typography-text>

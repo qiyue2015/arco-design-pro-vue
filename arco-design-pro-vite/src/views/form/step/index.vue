@@ -7,12 +7,7 @@
           {{ $t('stepForm.step.title') }}
         </template>
         <div class="wrapper">
-          <a-steps
-            v-model:current="step"
-            style="width: 580px"
-            line-less
-            class="steps"
-          >
+          <a-steps v-model:current="step" style="width: 580px" line-less class="steps">
             <a-step :description="$t('stepForm.step.subTitle.baseInfo')">
               {{ $t('stepForm.step.title.baseInfo') }}
             </a-step>
@@ -37,12 +32,7 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import useLoading from '@/hooks/loading';
-  import {
-    submitChannelForm,
-    BaseInfoModel,
-    ChannelInfoModel,
-    UnitChannelModel,
-  } from '@/api/form';
+  import { submitChannelForm, BaseInfoModel, ChannelInfoModel, UnitChannelModel } from '@/api/form';
   import BaseInfo from './components/base-info.vue';
   import ChannelInfo from './components/channel-info.vue';
   import Success from './components/success.vue';
@@ -62,10 +52,7 @@
       setLoading(false);
     }
   };
-  const changeStep = (
-    direction: string | number,
-    model: BaseInfoModel | ChannelInfoModel
-  ) => {
+  const changeStep = (direction: string | number, model: BaseInfoModel | ChannelInfoModel) => {
     if (typeof direction === 'number') {
       step.value = direction;
       return;

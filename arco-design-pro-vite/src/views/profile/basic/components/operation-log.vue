@@ -6,18 +6,9 @@
     <a-spin :loading="loading" style="width: 100%">
       <a-table :data="renderData">
         <template #columns>
-          <a-table-column
-            :title="$t('basicProfile.column.contentNumber')"
-            data-index="contentNumber"
-          />
-          <a-table-column
-            :title="$t('basicProfile.column.updateContent')"
-            data-index="updateContent"
-          />
-          <a-table-column
-            :title="$t('basicProfile.column.status')"
-            data-index="status"
-          >
+          <a-table-column :title="$t('basicProfile.column.contentNumber')" data-index="contentNumber" />
+          <a-table-column :title="$t('basicProfile.column.updateContent')" data-index="updateContent" />
+          <a-table-column :title="$t('basicProfile.column.status')" data-index="status">
             <template #cell="{ record }">
               <p v-if="record.status === 0">
                 <span class="circle"></span>
@@ -29,15 +20,10 @@
               </p>
             </template>
           </a-table-column>
-          <a-table-column
-            :title="$t('basicProfile.column.updateTime')"
-            data-index="updateTime"
-          />
+          <a-table-column :title="$t('basicProfile.column.updateTime')" data-index="updateTime" />
           <a-table-column :title="$t('basicProfile.column.operation')">
             <template #cell>
-              <a-button type="text">{{
-                $t('basicProfile.cell.view')
-              }}</a-button>
+              <a-button type="text">{{ $t('basicProfile.cell.view') }}</a-button>
             </template>
           </a-table-column>
         </template>

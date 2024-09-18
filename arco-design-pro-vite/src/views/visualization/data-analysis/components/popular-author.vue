@@ -15,16 +15,9 @@
         :scroll="{ x: '100%', y: '350px' }"
       >
         <template #columns>
-          <a-table-column
-            :title="$t('dataAnalysis.popularAuthor.column.ranking')"
-            data-index="ranking"
-          >
+          <a-table-column :title="$t('dataAnalysis.popularAuthor.column.ranking')" data-index="ranking">
           </a-table-column>
-          <a-table-column
-            :title="$t('dataAnalysis.popularAuthor.column.author')"
-            data-index="author"
-          >
-          </a-table-column>
+          <a-table-column :title="$t('dataAnalysis.popularAuthor.column.author')" data-index="author"> </a-table-column>
           <a-table-column
             :title="$t('dataAnalysis.popularAuthor.column.content')"
             data-index="contentCount"

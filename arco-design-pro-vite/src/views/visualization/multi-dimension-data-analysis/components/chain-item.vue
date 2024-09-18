@@ -1,21 +1,9 @@
 <template>
   <a-spin :loading="loading" style="width: 100%">
-    <a-card
-      class="general-card"
-      :title="title"
-      :header-style="{ paddingBottom: '12px' }"
-    >
+    <a-card class="general-card" :title="title" :header-style="{ paddingBottom: '12px' }">
       <div class="content">
-        <a-statistic
-          :value="count"
-          :show-group-separator="true"
-          :value-from="0"
-          animation
-        />
-        <a-typography-text
-          class="percent-text"
-          :type="isUp ? 'danger' : 'success'"
-        >
+        <a-statistic :value="count" :show-group-separator="true" :value-from="0" animation />
+        <a-typography-text class="percent-text" :type="isUp ? 'danger' : 'success'">
           {{ growth }}%
           <icon-arrow-rise v-if="isUp" />
           <icon-arrow-fall v-else />
