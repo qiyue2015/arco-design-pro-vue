@@ -1,0 +1,3 @@
+[submodule "examples/arco-design-pro-vite"]
+	path = examples/arco-design-pro-vite
+	url = git@github.com:qiyue2015/arco-design-pro-vite-simple.git
