@@ -31,6 +31,7 @@ const maps = {
   '.stylelintrc.js': '.stylelintrc.js',
   '.prettierrc.js': '.prettierrc.js',
   'tsconfig.json': 'tsconfig.json',
+  'plopfile.mjs': 'plopfile.mjs',
 };
 
 fs.copySync(templatePath, projectPath, {
