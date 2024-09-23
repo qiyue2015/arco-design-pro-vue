@@ -12,7 +12,8 @@
     "preview": "npm run build && vite preview --host",
     "type:check": "vue-tsc --noEmit --skipLibCheck",
     "lint-staged": "npx lint-staged",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "new": "plop"
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx}": [
@@ -72,6 +73,7 @@
     "less": "^4.1.3",
     "lint-staged": "^13.0.3",
     "mockjs": "^1.1.0",
+    "plop": "^4.0.1",
     "postcss-html": "^1.5.0",
     "prettier": "^2.7.1",
     "rollup": "^3.9.1",
