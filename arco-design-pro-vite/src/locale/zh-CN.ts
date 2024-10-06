@@ -3,8 +3,6 @@ import localeLogin from '@/views/login/locale/zh-CN';
 
 import localeWorkplace from '@/views/dashboard/workplace/locale/zh-CN';
 /** simple */
-import localeMonitor from '@/views/dashboard/monitor/locale/zh-CN';
-
 import localeSearchTable from '@/views/list/search-table/locale/zh-CN';
 import localeCardList from '@/views/list/card/locale/zh-CN';
 
@@ -49,7 +47,6 @@ export default {
   ...localeLogin,
   ...localeWorkplace,
   /** simple */
-  ...localeMonitor,
   ...localeSearchTable,
   ...localeCardList,
   ...localeStepForm,
