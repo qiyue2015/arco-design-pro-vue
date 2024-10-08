@@ -156,23 +156,20 @@ importers:
         specifier: ^5.8.2
         version: 5.12.0(rollup@2.79.1)
       stylelint:
-        specifier: ^14.13.0
-        version: 14.16.1
-      stylelint-config-prettier:
-        specifier: ^9.0.3
-        version: 9.0.5(stylelint@14.16.1)
+        specifier: ^15.7.0
+        version: 15.7.0(typescript@4.9.5)
       stylelint-config-rational-order:
         specifier: ^0.1.2
         version: 0.1.2
       stylelint-config-recommended-vue:
         specifier: ^1.4.0
-        version: 1.5.0(postcss-html@1.7.0)(stylelint@14.16.1)
+        version: 1.5.0(postcss-html@1.7.0)(stylelint@15.7.0(typescript@4.9.5))
       stylelint-config-standard:
         specifier: ^29.0.0
-        version: 29.0.0(stylelint@14.16.1)
+        version: 29.0.0(stylelint@15.7.0(typescript@4.9.5))
       stylelint-order:
         specifier: ^5.0.0
-        version: 5.0.0(stylelint@14.16.1)
+        version: 5.0.0(stylelint@15.7.0(typescript@4.9.5))
       typescript:
         specifier: ^4.8.4
         version: 4.9.5
@@ -487,6 +484,23 @@ packages:
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
     engines: {node: '>=12'}
 
+  '@csstools/css-parser-algorithms@2.7.1':
+    resolution: {integrity: sha512-2SJS42gxmACHgikc1WGesXLIT8d/q2l0UFM7TaEeIzdFCE/FPMtTiizcPGGJtlPo2xuQzY09OhrLTzRxqJqwGw==}
+    engines: {node: ^14 || ^16 || >=18}
+    peerDependencies:
+      '@csstools/css-tokenizer': ^2.4.1
+
+  '@csstools/css-tokenizer@2.4.1':
+    resolution: {integrity: sha512-eQ9DIktFJBhGjioABJRtUucoWR2mwllurfnM8LuNGAqX3ViZXaUchqk+1s7jjtkFiT9ySdACsFEA3etErkALUg==}
+    engines: {node: ^14 || ^16 || >=18}
+
+  '@csstools/media-query-list-parser@2.1.13':
+    resolution: {integrity: sha512-XaHr+16KRU9Gf8XLi3q8kDlI18d5vzKSKCY510Vrtc9iNR0NJzbY9hhTmwhzYZj/ZwGL4VmB3TA9hJW0Um2qFA==}
+    engines: {node: ^14 || ^16 || >=18}
+    peerDependencies:
+      '@csstools/css-parser-algorithms': ^2.7.1
+      '@csstools/css-tokenizer': ^2.4.1
+
   '@csstools/selector-specificity@2.2.0':
     resolution: {integrity: sha512-+OJ9konv95ClSTOJCmMZqpd5+YGsB2S+x6w3E1oaM8UuR5j8nTNHYSz8c9BEPGDOCMQYIEEGlVPj/VY64iTbGw==}
     engines: {node: ^14 || ^16 || >=18}
@@ -734,9 +748,6 @@ packages:
 
   '@types/nprogress@0.2.3':
     resolution: {integrity: sha512-k7kRA033QNtC+gLc4VPlfnue58CM1iQLgn1IMAU8VPHGOj7oIHPp9UlhedEnD/Gl8evoCjwkZjlBORtZ3JByUA==}
-
-  '@types/parse-json@4.0.2':
-    resolution: {integrity: sha512-dISoDXWWQwUquiKsyZ4Ng+HX2KsPL7LyHKHQwgGFEA3IaKac4Obd+h2a/a6waisAoepJlBcx9paWqjA8/HVjCw==}
 
   '@types/responselike@1.0.3':
     resolution: {integrity: sha512-H/+L+UkTV33uf49PH5pCAUBVPNj2nDBXTN+qS1dOwyyg24l3CcicicCA7ca+HMvJBZcFgl5r8e+RR6elsb4Lyw==}
@@ -1503,10 +1514,6 @@ packages:
     resolution: {integrity: sha512-H65gsXo1SKjf8zmrJ67eJk8aIRKV5ff2D4uKZIBZShbhGSpEmsQOPW/SKMKYhSTrqR7ufy6RP69rPogdaPh/kA==}
     engines: {node: '>=4'}
 
-  cosmiconfig@7.1.0:
-    resolution: {integrity: sha512-AdmX6xUzdNASswsFtmwSt7Vj8po9IuqXm0UXz7QKPuEUmPB4XyjGfaAr2PSuELMwkRMVH1EpIkX5bTZGRB3eCA==}
-    engines: {node: '>=10'}
-
   cosmiconfig@8.3.6:
     resolution: {integrity: sha512-kcZ6+W5QzcJ3P1Mt+83OUv/oHFqZHIx8DuxG6eZ5RGMERoLqp4BuGjhHLYGK+Kf5XVkQvqBSmAy/nGWN3qDgEA==}
     engines: {node: '>=14'}
@@ -1545,6 +1552,10 @@ packages:
   css-tree@1.1.3:
     resolution: {integrity: sha512-tRpdppF7TRazZrjJ6v3stzv93qxRcSsFmW6cX0Zm2NVKpxE1WV1HblnghVv9TreireHkqI/VDEsfolRF1p6y7Q==}
     engines: {node: '>=8.0.0'}
+
+  css-tree@2.3.1:
+    resolution: {integrity: sha512-6Fv1DV/TYw//QF5IzQdqsNDjx/wc8TrMBZsqjL9eW01tWb7R7k/mq+/VXfJCl7SoD5emsJop9cOByJZfs8hYIw==}
+    engines: {node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0}
 
   css-what@6.1.0:
     resolution: {integrity: sha512-HTUrgRJ7r4dsZKU6GjmpfRK1O76h97Z8MfS1G0FozR+oF2kG6Vfe8JE6zwrkbxigziPHinCJ+gCPjA9EaBDtRw==}
@@ -3390,8 +3401,8 @@ packages:
   known-css-properties@0.11.0:
     resolution: {integrity: sha512-bEZlJzXo5V/ApNNa5z375mJC6Nrz4vG43UgcSCrg2OHC+yuB6j0iDSrY7RQ/+PRofFB03wNIIt9iXIVLr4wc7w==}
 
-  known-css-properties@0.26.0:
-    resolution: {integrity: sha512-5FZRzrZzNTBruuurWpvZnvP9pum+fe0HcK8z/ooo+U+Hmp4vtbyp1/QDsqmufirXy4egGzbaH/y2uCZf+6W5Kg==}
+  known-css-properties@0.27.0:
+    resolution: {integrity: sha512-uMCj6+hZYDoffuvAJjFAPz56E9uoowFHmTkqRtRq5WyC5Q6Cu/fTZKNQpX/RbzChBYLLl3lo8CjFZBAZXq9qFg==}
 
   less@4.2.0:
     resolution: {integrity: sha512-P3b3HJDBtSzsXUl0im2L7gTO5Ubg8mEN6G8qoTS77iXxXX4Hvu4Qj540PZDvQ8V6DmX6iXo98k7Md0Cm1PrLaA==}
@@ -3611,6 +3622,9 @@ packages:
 
   mdn-data@2.0.14:
     resolution: {integrity: sha512-dn6wd0uw5GsdswPFfsgMp5NSB0/aDe6fK94YJV/AJDYXL6HVLWBsxeq7js7Ad+mU2K9LAlwpk6kN2D5mwCPVow==}
+
+  mdn-data@2.0.30:
+    resolution: {integrity: sha512-GaqWWShW4kv/G9IEucWScBx9G1/vsFZZJUO+tD26M8J8z3Kw5RDQjaoZe03YAClgeS/SWPOcb4nkFBTEi5DUEA==}
 
   meow@3.7.0:
     resolution: {integrity: sha512-TNdwZs0skRlpPpCUK25StC4VH+tP5GgeY1HQOOGP+lQ2xtdkN2VtT/5tiX9k3IWpkBPV9b3LsAWXn4GGi/PrSA==}
@@ -4964,13 +4978,6 @@ packages:
       postcss-html: ^1.0.0
       stylelint: '>=14.0.0'
 
-  stylelint-config-prettier@9.0.5:
-    resolution: {integrity: sha512-U44lELgLZhbAD/xy/vncZ2Pq8sh2TnpiPvo38Ifg9+zeioR+LAkHu0i6YORIOxFafZoVg0xqQwex6e6F25S5XA==}
-    engines: {node: '>= 12'}
-    hasBin: true
-    peerDependencies:
-      stylelint: '>= 11.x < 15'
-
   stylelint-config-rational-order@0.1.2:
     resolution: {integrity: sha512-Qo7ZQaihCwTqijfZg4sbdQQHtugOX/B1/fYh018EiDZHW+lkqH9uHOnsDwDPGZrYJuB6CoyI7MZh2ecw2dOkew==}
 
@@ -5008,9 +5015,9 @@ packages:
     peerDependencies:
       stylelint: ^14.0.0
 
-  stylelint@14.16.1:
-    resolution: {integrity: sha512-ErlzR/T3hhbV+a925/gbfc3f3Fep9/bnspMiJPorfGEmcBbXdS+oo6LrVtoUZ/w9fqD6o6k7PtUlCOsCRdjX/A==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+  stylelint@15.7.0:
+    resolution: {integrity: sha512-fQRwHwWuZsDn4ENyE9AsKkOkV9WlD2CmYiVDbdZPdS3iZh0ceypOn1EuwTNuZ8xTrHF+jVeIEzLtFFSlD/nJHg==}
+    engines: {node: ^14.13.1 || >=16.0.0}
     hasBin: true
 
   stylelint@9.10.1:
@@ -5033,9 +5040,9 @@ packages:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
     engines: {node: '>=8'}
 
-  supports-hyperlinks@2.3.0:
-    resolution: {integrity: sha512-RpsAZlpWcDwOPQA22aCH4J0t7L8JmAvsCxfOSEwm7cQs3LshN36QaTkwd70DnBOXDWGssw2eUoc8CaRWT0XunA==}
-    engines: {node: '>=8'}
+  supports-hyperlinks@3.1.0:
+    resolution: {integrity: sha512-2rn0BZ+/f7puLOHZm1HOJfwBggfaHXUpPUSSG/SWM4TWp5KCfmNYwnC3hruy2rZlMnmWZ+QAGpZfchu3f3695A==}
+    engines: {node: '>=14.18'}
 
   supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
@@ -5565,9 +5572,9 @@ packages:
   wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
 
-  write-file-atomic@4.0.2:
-    resolution: {integrity: sha512-7KxauUdBmSdWnmpaGFg+ppNjKF8uNLry8LyzjauQDOVONfFLNKrKvQOxZ/VuTIcS/gge/YNahf5RIIQWTSarlg==}
-    engines: {node: ^12.13.0 || ^14.15.0 || >=16.0.0}
+  write-file-atomic@5.0.1:
+    resolution: {integrity: sha512-+QU2zd6OTD8XWIJCbffaiQeH9U73qIqafo1x6V1snCWYGJf6cVE0cDR4D8xRzcEnfI21IFrUPzPGtcPf8AC+Rw==}
+    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
 
   write@1.0.3:
     resolution: {integrity: sha512-/lg70HAjtkUgWPVZhZcm+T4hkL8Zbtp1nFNOn3lRrxnlv50SRBv7cR7RqR+GMsd3hUXy9hWBo4CHTbFTcOYwig==}
@@ -5596,10 +5603,6 @@ packages:
 
   yallist@4.0.0:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
-
-  yaml@1.10.2:
-    resolution: {integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==}
-    engines: {node: '>= 6'}
 
   yaml@2.3.1:
     resolution: {integrity: sha512-2eHWfjaoXgTBC2jNM1LRef62VQa0umtvRiDSk6HSzW7RvS5YtkabJrwYLLEKWBc8a5U2PTSCs+dJjUTJdlHsWQ==}
@@ -6092,6 +6095,17 @@ snapshots:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
 
+  '@csstools/css-parser-algorithms@2.7.1(@csstools/css-tokenizer@2.4.1)':
+    dependencies:
+      '@csstools/css-tokenizer': 2.4.1
+
+  '@csstools/css-tokenizer@2.4.1': {}
+
+  '@csstools/media-query-list-parser@2.1.13(@csstools/css-parser-algorithms@2.7.1(@csstools/css-tokenizer@2.4.1))(@csstools/css-tokenizer@2.4.1)':
+    dependencies:
+      '@csstools/css-parser-algorithms': 2.7.1(@csstools/css-tokenizer@2.4.1)
+      '@csstools/css-tokenizer': 2.4.1
+
   '@csstools/selector-specificity@2.2.0(postcss-selector-parser@6.1.2)':
     dependencies:
       postcss-selector-parser: 6.1.2
@@ -6361,8 +6375,6 @@ snapshots:
   '@types/normalize-package-data@2.4.4': {}
 
   '@types/nprogress@0.2.3': {}
-
-  '@types/parse-json@4.0.2': {}
 
   '@types/responselike@1.0.3':
     dependencies:
@@ -7308,14 +7320,6 @@ snapshots:
       js-yaml: 3.14.1
       parse-json: 4.0.0
 
-  cosmiconfig@7.1.0:
-    dependencies:
-      '@types/parse-json': 4.0.2
-      import-fresh: 3.3.0
-      parse-json: 5.2.0
-      path-type: 4.0.0
-      yaml: 1.10.2
-
   cosmiconfig@8.3.6(typescript@4.9.5):
     dependencies:
       import-fresh: 3.3.0
@@ -7365,6 +7369,11 @@ snapshots:
     dependencies:
       mdn-data: 2.0.14
       source-map: 0.6.1
+
+  css-tree@2.3.1:
+    dependencies:
+      mdn-data: 2.0.30
+      source-map-js: 1.2.1
 
   css-what@6.1.0: {}
 
@@ -9294,7 +9303,7 @@ snapshots:
 
   known-css-properties@0.11.0: {}
 
-  known-css-properties@0.26.0: {}
+  known-css-properties@0.27.0: {}
 
   less@4.2.0:
     dependencies:
@@ -9529,6 +9538,8 @@ snapshots:
       unist-util-visit: 1.4.1
 
   mdn-data@2.0.14: {}
+
+  mdn-data@2.0.30: {}
 
   meow@3.7.0:
     dependencies:
@@ -10952,14 +10963,10 @@ snapshots:
 
   style-search@0.1.0: {}
 
-  stylelint-config-html@1.1.0(postcss-html@1.7.0)(stylelint@14.16.1):
+  stylelint-config-html@1.1.0(postcss-html@1.7.0)(stylelint@15.7.0(typescript@4.9.5)):
     dependencies:
       postcss-html: 1.7.0
-      stylelint: 14.16.1
-
-  stylelint-config-prettier@9.0.5(stylelint@14.16.1):
-    dependencies:
-      stylelint: 14.16.1
+      stylelint: 15.7.0(typescript@4.9.5)
 
   stylelint-config-rational-order@0.1.2:
     dependencies:
@@ -10968,26 +10975,26 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  stylelint-config-recommended-vue@1.5.0(postcss-html@1.7.0)(stylelint@14.16.1):
+  stylelint-config-recommended-vue@1.5.0(postcss-html@1.7.0)(stylelint@15.7.0(typescript@4.9.5)):
     dependencies:
       postcss-html: 1.7.0
       semver: 7.6.3
-      stylelint: 14.16.1
-      stylelint-config-html: 1.1.0(postcss-html@1.7.0)(stylelint@14.16.1)
-      stylelint-config-recommended: 14.0.1(stylelint@14.16.1)
+      stylelint: 15.7.0(typescript@4.9.5)
+      stylelint-config-html: 1.1.0(postcss-html@1.7.0)(stylelint@15.7.0(typescript@4.9.5))
+      stylelint-config-recommended: 14.0.1(stylelint@15.7.0(typescript@4.9.5))
 
-  stylelint-config-recommended@14.0.1(stylelint@14.16.1):
+  stylelint-config-recommended@14.0.1(stylelint@15.7.0(typescript@4.9.5)):
     dependencies:
-      stylelint: 14.16.1
+      stylelint: 15.7.0(typescript@4.9.5)
 
-  stylelint-config-recommended@9.0.0(stylelint@14.16.1):
+  stylelint-config-recommended@9.0.0(stylelint@15.7.0(typescript@4.9.5)):
     dependencies:
-      stylelint: 14.16.1
+      stylelint: 15.7.0(typescript@4.9.5)
 
-  stylelint-config-standard@29.0.0(stylelint@14.16.1):
+  stylelint-config-standard@29.0.0(stylelint@15.7.0(typescript@4.9.5)):
     dependencies:
-      stylelint: 14.16.1
-      stylelint-config-recommended: 9.0.0(stylelint@14.16.1)
+      stylelint: 15.7.0(typescript@4.9.5)
+      stylelint-config-recommended: 9.0.0(stylelint@15.7.0(typescript@4.9.5))
 
   stylelint-order@2.2.1(stylelint@9.10.1):
     dependencies:
@@ -10996,19 +11003,23 @@ snapshots:
       postcss-sorting: 4.1.0
       stylelint: 9.10.1
 
-  stylelint-order@5.0.0(stylelint@14.16.1):
+  stylelint-order@5.0.0(stylelint@15.7.0(typescript@4.9.5)):
     dependencies:
       postcss: 8.4.47
       postcss-sorting: 7.0.1(postcss@8.4.47)
-      stylelint: 14.16.1
+      stylelint: 15.7.0(typescript@4.9.5)
 
-  stylelint@14.16.1:
+  stylelint@15.7.0(typescript@4.9.5):
     dependencies:
+      '@csstools/css-parser-algorithms': 2.7.1(@csstools/css-tokenizer@2.4.1)
+      '@csstools/css-tokenizer': 2.4.1
+      '@csstools/media-query-list-parser': 2.1.13(@csstools/css-parser-algorithms@2.7.1(@csstools/css-tokenizer@2.4.1))(@csstools/css-tokenizer@2.4.1)
       '@csstools/selector-specificity': 2.2.0(postcss-selector-parser@6.1.2)
       balanced-match: 2.0.0
       colord: 2.9.3
-      cosmiconfig: 7.1.0
+      cosmiconfig: 8.3.6(typescript@4.9.5)
       css-functions-list: 3.2.2
+      css-tree: 2.3.1
       debug: 4.3.7
       fast-glob: 3.3.2
       fastest-levenshtein: 1.0.16
@@ -11021,7 +11032,7 @@ snapshots:
       import-lazy: 4.0.0
       imurmurhash: 0.1.4
       is-plain-object: 5.0.0
-      known-css-properties: 0.26.0
+      known-css-properties: 0.27.0
       mathml-tag-names: 2.1.3
       meow: 9.0.0
       micromatch: 4.0.8
@@ -11037,13 +11048,14 @@ snapshots:
       string-width: 4.2.3
       strip-ansi: 6.0.1
       style-search: 0.1.0
-      supports-hyperlinks: 2.3.0
+      supports-hyperlinks: 3.1.0
       svg-tags: 1.0.0
       table: 6.8.2
       v8-compile-cache: 2.4.0
-      write-file-atomic: 4.0.2
+      write-file-atomic: 5.0.1
     transitivePeerDependencies:
       - supports-color
+      - typescript
 
   stylelint@9.10.1:
     dependencies:
@@ -11111,7 +11123,7 @@ snapshots:
     dependencies:
       has-flag: 4.0.0
 
-  supports-hyperlinks@2.3.0:
+  supports-hyperlinks@3.1.0:
     dependencies:
       has-flag: 4.0.0
       supports-color: 7.2.0
@@ -11724,10 +11736,10 @@ snapshots:
 
   wrappy@1.0.2: {}
 
-  write-file-atomic@4.0.2:
+  write-file-atomic@5.0.1:
     dependencies:
       imurmurhash: 0.1.4
-      signal-exit: 3.0.7
+      signal-exit: 4.1.0
 
   write@1.0.3:
     dependencies:
@@ -11746,8 +11758,6 @@ snapshots:
   yallist@3.1.1: {}
 
   yallist@4.0.0: {}
-
-  yaml@1.10.2: {}
 
   yaml@2.3.1: {}
 
