@@ -27,6 +27,7 @@
       });
 
       const topMenu = computed(() => appStore.topMenu);
+      const groupMenu = computed(() => appStore.groupMenu);
       const openKeys = ref<string[]>([]);
       const selectedKey = ref<string[]>([]);
 
@@ -90,8 +91,12 @@
             _route.forEach((element) => {
               // This is demo, modify nodes as needed
               const icon = element?.meta?.icon ? () => h(compile(`<${element?.meta?.icon}/>`)) : null;
-              const node =
-                element?.children && element?.children.length !== 0 ? (
+              if (element?.children && element?.children.length) {
+                const node = groupMenu.value ? (
+                  <a-menu-item-group key={element?.name} title={t(element?.meta?.locale || '')}>
+                    {travel(element?.children)}
+                  </a-menu-item-group>
+                ) : (
                   <a-sub-menu
                     key={element?.name}
                     v-slots={{
@@ -101,12 +106,16 @@
                   >
                     {travel(element?.children)}
                   </a-sub-menu>
-                ) : (
+                );
+                nodes.push(node as never);
+              } else {
+                const node = (
                   <a-menu-item key={element?.name} v-slots={{ icon }} onClick={() => goto(element)}>
                     {t(element?.meta?.locale || '')}
                   </a-menu-item>
                 );
-              nodes.push(node as never);
+                nodes.push(node as never);
+              }
             });
           }
           return nodes;
@@ -123,7 +132,7 @@
           auto-open={false}
           selected-keys={selectedKey.value}
           auto-open-selected={true}
-          level-indent={34}
+          level-indent={groupMenu.value ? 0 : 34}
           style="height: 100%;width:100%;"
           onCollapse={setCollapse}
         >

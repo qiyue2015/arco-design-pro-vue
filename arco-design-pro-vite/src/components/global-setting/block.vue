@@ -22,7 +22,7 @@
     name: string;
     key: string;
     type?: string;
-    defaultVal?: boolean | string | number;
+    defaultVal?: boolean | string | number | any; // 暂时放宽类型限制，不然无法打包
   }
   defineProps({
     title: {
@@ -47,6 +47,7 @@
     if (key === 'topMenu') {
       appStore.updateSettings({
         menuCollapse: false,
+        groupMenu: false,
       });
     }
     appStore.updateSettings({ [key]: value });

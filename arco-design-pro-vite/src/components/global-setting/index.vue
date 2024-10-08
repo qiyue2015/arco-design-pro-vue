@@ -38,37 +38,15 @@
   const visible = computed(() => appStore.globalSettings);
   const contentOpts = computed(() => [
     { name: 'settings.navbar', key: 'navbar', defaultVal: appStore.navbar },
-    {
-      name: 'settings.menu',
-      key: 'menu',
-      defaultVal: appStore.menu,
-    },
-    {
-      name: 'settings.topMenu',
-      key: 'topMenu',
-      defaultVal: appStore.topMenu,
-    },
+    { name: 'settings.menu', key: 'menu', defaultVal: appStore.menu },
+    { name: 'settings.topMenu', key: 'topMenu', defaultVal: appStore.topMenu },
+    { name: 'settings.groupMenu', key: 'groupMenu', defaultVal: appStore.groupMenu },
     { name: 'settings.footer', key: 'footer', defaultVal: appStore.footer },
     { name: 'settings.tabBar', key: 'tabBar', defaultVal: appStore.tabBar },
-    {
-      name: 'settings.menuFromServer',
-      key: 'menuFromServer',
-      defaultVal: appStore.menuFromServer,
-    },
-    {
-      name: 'settings.menuWidth',
-      key: 'menuWidth',
-      defaultVal: appStore.menuWidth,
-      type: 'number',
-    },
+    { name: 'settings.menuFromServer', key: 'menuFromServer', defaultVal: appStore.menuFromServer },
+    { name: 'settings.menuWidth', key: 'menuWidth', defaultVal: appStore.menuWidth, type: 'number' },
   ]);
-  const othersOpts = computed(() => [
-    {
-      name: 'settings.colorWeak',
-      key: 'colorWeak',
-      defaultVal: appStore.colorWeak,
-    },
-  ]);
+  const othersOpts = computed(() => [{ name: 'settings.colorWeak', key: 'colorWeak', defaultVal: appStore.colorWeak }]);
 
   const cancel = () => {
     appStore.updateSettings({ globalSettings: false });
