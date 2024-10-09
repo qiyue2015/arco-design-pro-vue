@@ -53,12 +53,14 @@
           font-weight: 500;
           font-size: 30px;
           line-height: 38px;
+          color: var(--color-text-1);
         }
 
         &-description {
           margin-top: 16px;
           font-size: 13px;
           line-height: 22px;
+          color: var(--color-text-2);
         }
 
         &-operation {

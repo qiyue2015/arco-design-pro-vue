@@ -7,7 +7,6 @@
       />
       <div class="logo-text">Arco Design Pro</div>
     </div>
-    <LoginBanner />
     <div class="content">
       <div class="content-inner">
         <LoginForm />
@@ -21,19 +20,14 @@
 
 <script lang="ts" setup>
   import Footer from '@/components/footer/index.vue';
-  import LoginBanner from './components/banner.vue';
   import LoginForm from './components/login-form.vue';
 </script>
 
 <style lang="less" scoped>
   .container {
+    background: linear-gradient(173deg, #ecf4ff -0.79%, #d3e1ff 94.5%);
     display: flex;
     height: 100vh;
-
-    .banner {
-      width: 550px;
-      background: linear-gradient(163.85deg, #1d2129 0%, #00308f 100%);
-    }
 
     .content {
       position: relative;
@@ -42,6 +36,12 @@
       align-items: center;
       justify-content: center;
       padding-bottom: 40px;
+      &-inner {
+        padding: 40px 64px;
+        background-color: #ffffff;
+        border-radius: 12px;
+        overflow: hidden;
+      }
     }
 
     .footer {
@@ -63,19 +63,9 @@
     &-text {
       margin-right: 4px;
       margin-left: 4px;
-      color: var(--color-fill-1);
+      // color: var(--color-fill-1);
+      color: var(--color-text-1);
       font-size: 20px;
-    }
-  }
-</style>
-
-<style lang="less" scoped>
-  // responsive
-  @media (max-width: @screen-lg) {
-    .container {
-      .banner {
-        width: 25%;
-      }
     }
   }
 </style>

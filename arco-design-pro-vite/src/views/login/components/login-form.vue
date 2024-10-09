@@ -3,7 +3,7 @@
     <div class="login-form-title">{{ $t('login.form.title') }}</div>
     <!-- <div class="login-form-sub-title">{{ $t('login.form.title') }}</div> -->
     <div class="login-form-error-msg">{{ errorMessage }}</div>
-    <a-form ref="loginForm" :model="userInfo" class="login-form" layout="vertical" @submit="handleSubmit">
+    <a-form ref="loginForm" :model="userInfo" size="large" class="login-form" layout="vertical" @submit="handleSubmit">
       <a-form-item
         field="username"
         :rules="[{ required: true, message: $t('login.form.userName.errMsg') }]"
@@ -39,10 +39,10 @@
           </a-checkbox>
           <a-link>{{ $t('login.form.forgetPassword') }}</a-link>
         </div>
-        <a-button type="primary" html-type="submit" long :loading="loading">
+        <a-button type="primary" size="large" html-type="submit" long :loading="loading">
           {{ $t('login.form.login') }}
         </a-button>
-        <a-button type="text" long class="login-form-register-btn">
+        <a-button type="text" size="large" long class="login-form-register-btn">
           {{ $t('login.form.register') }}
         </a-button>
       </a-space>
@@ -119,6 +119,7 @@
   .login-form {
     &-wrapper {
       width: 320px;
+      text-align: center;
     }
 
     &-title {
