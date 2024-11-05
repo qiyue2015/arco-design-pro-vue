@@ -77,7 +77,7 @@ const simpleOptions = [
   },
   {
     base: 'src/api',
-    excludes: ['dashboard', 'interceptor', 'user', 'message'],
+    excludes: ['dashboard', 'interceptor', 'user', 'message', 'file'],
   },
   {
     base: 'src/router/routes/modules',

@@ -28,6 +28,15 @@ axios.interceptors.request.use(
       }
       config.headers.Authorization = `Bearer ${token}`;
     }
+    // 定制分页参数
+    if (config.params?.current) {
+      config.params.page = config.params.current;
+      delete config.params.current;
+    }
+    if (config.params?.pageSize) {
+      config.params.page_size = config.params.pageSize;
+      delete config.params.pageSize;
+    }
     return config;
   },
   (error) => {

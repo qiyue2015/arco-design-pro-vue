@@ -13,6 +13,17 @@ export const successResponseWrap = (data: unknown) => {
   };
 };
 
+export const successPaginationResponseWrap = (response: any) => {
+  const { data, meta } = response;
+  return {
+    data,
+    meta,
+    status: 'ok',
+    message: '请求成功',
+    code: 0,
+  };
+};
+
 export const failResponseWrap = (data: unknown, message: string, code = 50000) => {
   return {
     data,

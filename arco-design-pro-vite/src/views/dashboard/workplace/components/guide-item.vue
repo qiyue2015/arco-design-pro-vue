@@ -42,12 +42,14 @@
         line-height: 23px;
         display: inline-block;
         margin-right: 4px;
+        color: var(--color-text-1);
       }
 
       &-text {
         font-weight: 500;
         font-size: 16px;
         line-height: 24px;
+        color: var(--color-text-1);
       }
     }
 
