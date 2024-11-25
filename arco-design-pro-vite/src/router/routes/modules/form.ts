@@ -32,6 +32,16 @@ const FORM: AppRouteRecordRaw = {
         roles: ['admin'],
       },
     },
+    {
+      path: 'tiptap',
+      name: 'Tiptap',
+      component: () => import('@/views/form/tiptap/index.vue'),
+      meta: {
+        locale: 'menu.form.tiptap',
+        requiresAuth: true,
+        roles: ['admin'],
+      },
+    },
   ],
 };
 

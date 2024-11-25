@@ -39,6 +39,7 @@ export default {
   'menu.faq': 'FAQ',
   'navbar.docs': 'Docs',
   'navbar.action.locale': 'Switch to English',
+  'menu.form.tiptap': 'Rich Text',
   ...localeSettings,
   ...localeMessageBox,
   ...localeLogin,

@@ -150,6 +150,33 @@
             </a-col>
           </a-row>
         </a-card>
+        <a-card class="general-card" title="图片上传">
+          <a-row :gutter="80">
+            <a-col :span="8">
+              <a-form-item label="不限上传数量" field="icon">
+                <ImageGallery v-model="formData.photos" :show-file-list="false">
+                  <template #upload-button>
+                    <a-button size="small">
+                      <template #icon>
+                        <icon-upload />
+                      </template>
+                    </a-button>
+                  </template>
+                </ImageGallery>
+              </a-form-item>
+            </a-col>
+            <a-col :span="8">
+              <a-form-item label="上传2张" field="icon">
+                <ImageGallery v-model="formData.photos" :limit="2" list-type="picture" />
+              </a-form-item>
+            </a-col>
+            <a-col :span="8">
+              <a-form-item label="宽屏 16:9" field="icon">
+                <ImageGallery v-model="formData.photos" :limit="2" list-type="picture-card" />
+              </a-form-item>
+            </a-col>
+          </a-row>
+        </a-card>
         <a-card class="general-card" :bordered="false">
           <template #title>
             {{ $t('groupForm.title.description') }}
@@ -178,7 +205,10 @@
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import useLoading from '@/hooks/loading';
 
-  const formData = ref({});
+  const formData = ref({
+    icon: '',
+    photos: [],
+  });
   const formRef = ref<FormInstance>();
   const { loading, setLoading } = useLoading();
   const onSubmitClick = async () => {

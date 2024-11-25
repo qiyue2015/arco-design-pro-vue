@@ -39,6 +39,7 @@ export default {
   'menu.faq': '常见问题',
   'navbar.docs': '文档中心',
   'navbar.action.locale': '切换为中文',
+  'menu.form.tiptap': '富文本',
   ...localeSettings,
   ...localeMessageBox,
   ...localeLogin,
