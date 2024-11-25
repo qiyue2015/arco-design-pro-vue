@@ -4,6 +4,7 @@ import Grid from './grid/index.vue';
 import GridTable from './grid/grid-table.vue';
 import GridToolbar from './grid/grid-toolbar.vue';
 import ImageGallery from './image-gallery/index.vue';
+import Tiptap from './tiptap/index.vue';
 
 export default {
   install(Vue: App) {
@@ -12,5 +13,6 @@ export default {
     Vue.component('GridToolbar', GridToolbar);
     Vue.component('GridTable', GridTable);
     Vue.component('ImageGallery', ImageGallery);
+    Vue.component('Tiptap', Tiptap);
   },
 };
