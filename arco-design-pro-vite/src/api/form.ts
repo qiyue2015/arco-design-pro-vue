@@ -5,6 +5,7 @@ export interface BaseInfoModel {
   channelType: string;
   promotionTime: string[];
   promoteLink: string;
+  location: string;
 }
 export interface ChannelInfoModel {
   advertisingSource: string;

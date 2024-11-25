@@ -62,6 +62,9 @@
         <span>{{ $t('stepForm.form.tip.promoteLink') }}</span>
       </template>
     </a-form-item>
+    <a-form-item field="location" label="坐标">
+      <QQMapSelect v-model="formData.location" :app-key="QQ_MAP_KEY" />
+    </a-form-item>
     <a-form-item>
       <a-button type="primary" @click="onNextClick">
         {{ $t('stepForm.button.next') }}
@@ -76,12 +79,17 @@
   import { BaseInfoModel } from '@/api/form';
 
   const emits = defineEmits(['changeStep']);
+
+  // 从.env文件中获取 VITE_QQ_MAP_KEY 环境变量
+  const QQ_MAP_KEY = import.meta.env.VITE_QQ_MAP_KEY;
+
   const formRef = ref<FormInstance>();
   const formData = ref<BaseInfoModel>({
     activityName: '',
     channelType: '',
     promotionTime: [],
     promoteLink: 'https://arco.design',
+    location: '',
   });
 
   const onNextClick = async () => {
