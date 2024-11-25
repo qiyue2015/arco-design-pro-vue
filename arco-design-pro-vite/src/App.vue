@@ -1,12 +1,15 @@
 <template>
   <a-config-provider :locale="locale">
-    <router-view />
+    <div v-if="!isFontLoaded" class="font-loading">
+      <a-spin dot />
+    </div>
+    <router-view v-else />
     <global-setting />
   </a-config-provider>
 </template>
 
 <script lang="ts" setup>
-  import { computed } from 'vue';
+  import { computed, onMounted, ref } from 'vue';
   import enUS from '@arco-design/web-vue/es/locale/lang/en-us';
   import zhCN from '@arco-design/web-vue/es/locale/lang/zh-cn';
   import GlobalSetting from '@/components/global-setting/index.vue';
@@ -23,4 +26,30 @@
         return zhCN;
     }
   });
+
+  const isFontLoaded = ref(false);
+
+  onMounted(() => {
+    const font = new FontFace(
+      '钉钉进步体 Regular',
+      `url('//mp-img1.wifixc.com/static/webfont/DingTalk-JinBuTi.woff2') format('woff2'), url('//mp-img1.wifixc.com/static/webfont/DingTalk-JinBuTi.woff') format('woff')`,
+      {
+        weight: '400',
+        display: 'swap',
+      }
+    );
+    font.load().then((loadedFont) => {
+      (document.fonts as any).add(loadedFont);
+      isFontLoaded.value = true;
+    });
+  });
 </script>
+
+<style scoped lang="less">
+  .font-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+</style>
