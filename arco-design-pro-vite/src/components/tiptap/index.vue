@@ -72,6 +72,7 @@
 
 <style lang="less" scoped>
   .tiptap-editor-wrapper {
+    width: 100%;
     position: relative;
     border: 1px solid var(--color-border-2);
     border-radius: var(--border-radius-small);
@@ -101,6 +102,7 @@
         margin-top: 0;
       }
 
+      height: 100%;
       box-sizing: border-box;
       font-family: sans-serif;
       line-height: 1.8;
