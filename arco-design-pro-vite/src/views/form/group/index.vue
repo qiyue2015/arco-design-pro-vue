@@ -30,10 +30,7 @@
               </a-form-item>
             </a-col>
             <a-col :span="8">
-              <a-form-item
-                :label="$t('groupForm.form.label.video.acquisition.frameRate')"
-                field="video.acquisition.frameRate"
-              >
+              <a-form-item :label="$t('groupForm.form.label.video.acquisition.frameRate')" field="video.acquisition.frameRate">
                 <a-input :placeholder="$t('groupForm.placeholder.video.acquisition.frameRate')">
                   <template #append> fps </template>
                 </a-input>
@@ -42,10 +39,7 @@
           </a-row>
           <a-row :gutter="80">
             <a-col :span="8">
-              <a-form-item
-                :label="$t('groupForm.form.label.video.encoding.resolution')"
-                field="video.encoding.resolution"
-              >
+              <a-form-item :label="$t('groupForm.form.label.video.encoding.resolution')" field="video.encoding.resolution">
                 <a-select :placeholder="$t('groupForm.placeholder.video.encoding.resolution')">
                   <a-option value="resolution1">分辨率1</a-option>
                   <a-option value="resolution2">分辨率2</a-option>
@@ -70,20 +64,14 @@
           </a-row>
           <a-row :gutter="80">
             <a-col :span="8">
-              <a-form-item
-                :label="$t('groupForm.form.label.video.encoding.rate.default')"
-                field="video.encoding.rate.default"
-              >
+              <a-form-item :label="$t('groupForm.form.label.video.encoding.rate.default')" field="video.encoding.rate.default">
                 <a-input :placeholder="$t('groupForm.placeholder.video.encoding.rate.default')">
                   <template #append> bps </template>
                 </a-input>
               </a-form-item>
             </a-col>
             <a-col :span="8">
-              <a-form-item
-                :label="$t('groupForm.form.label.video.encoding.frameRate')"
-                field="video.encoding.frameRate"
-              >
+              <a-form-item :label="$t('groupForm.form.label.video.encoding.frameRate')" field="video.encoding.frameRate">
                 <a-input :placeholder="$t('groupForm.placeholder.video.encoding.frameRate')">
                   <template #append> fps </template>
                 </a-input>
@@ -113,10 +101,7 @@
               </a-form-item>
             </a-col>
             <a-col :span="8">
-              <a-form-item
-                :label="$t('groupForm.form.label.audio.acquisition.channels')"
-                field="audio.acquisition.channels"
-              >
+              <a-form-item :label="$t('groupForm.form.label.audio.acquisition.channels')" field="audio.acquisition.channels">
                 <a-select :placeholder="$t('groupForm.placeholder.audio.acquisition.channels')">
                   <a-option value="1">1</a-option>
                   <a-option value="2">2</a-option>

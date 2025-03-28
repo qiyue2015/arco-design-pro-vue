@@ -2,12 +2,7 @@
   <div class="container">
     <Breadcrumb :items="['menu.result', 'menu.result.success']" />
     <div class="wrapper">
-      <a-result
-        class="result"
-        status="success"
-        :title="$t('success.result.title')"
-        :subtitle="$t('success.result.subTitle')"
-      >
+      <a-result class="result" status="success" :title="$t('success.result.title')" :subtitle="$t('success.result.subTitle')">
         <template #extra>
           <a-space class="operation-wrap" :size="16">
             <a-button key="again" type="secondary">

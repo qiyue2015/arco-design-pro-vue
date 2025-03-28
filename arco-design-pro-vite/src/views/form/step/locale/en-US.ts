@@ -47,8 +47,7 @@ export default {
   'stepForm.form.error.keyword.required': 'Please select keyword',
   'stepForm.form.label.pushNotify': 'Push Notify',
   'stepForm.form.label.advertisingContent': 'Advertising Content',
-  'stepForm.placeholder.advertisingContent':
-    'Please enter the description of advertisement content, the maximum is 200 words',
+  'stepForm.placeholder.advertisingContent': 'Please enter the description of advertisement content, the maximum is 200 words',
   'stepForm.form.error.advertisingContent.required': 'Please enter the description of advertisement content',
   'stepForm.form.error.advertisingContent.maxLength': 'the maximum is 200 words',
   // form -2 end

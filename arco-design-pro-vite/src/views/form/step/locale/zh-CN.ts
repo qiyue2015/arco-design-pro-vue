@@ -25,8 +25,7 @@ export default {
   'stepForm.form.error.promotionTime.required': '请选择推广时间',
   'stepForm.form.label.promoteLink': '推广地址',
   'stepForm.form.error.promoteLink.required': '请输入推广地址',
-  'stepForm.form.error.promoteLink.pattern':
-    '如 Android 或 iOS 的下载地址、中间跳转URL，网址必须以 http:// 或 https:// 开头',
+  'stepForm.form.error.promoteLink.pattern': '如 Android 或 iOS 的下载地址、中间跳转URL，网址必须以 http:// 或 https:// 开头',
   'stepForm.form.tip.promoteLink': '如 Android 或 iOS 的下载地址、中间跳转URL，网址必须以 http:// 或 https:// 开头',
   'stepForm.placeholder.promoteLink': '请输入推广页面地址',
   'stepForm.form.label.advertisingSource': '广告来源',

@@ -15,17 +15,7 @@
           </a-card>
         </div>
       </a-col>
-      <a-col
-        v-for="item in renderData"
-        :key="item.id"
-        class="list-col"
-        :xs="12"
-        :sm="12"
-        :md="12"
-        :lg="6"
-        :xl="6"
-        :xxl="6"
-      >
+      <a-col v-for="item in renderData" :key="item.id" class="list-col" :xs="12" :sm="12" :md="12" :lg="6" :xl="6" :xxl="6">
         <CardWrap
           :loading="loading"
           :title="item.title"
