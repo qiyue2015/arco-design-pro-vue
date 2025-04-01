@@ -5,7 +5,7 @@
         alt="logo"
         src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/dfdba5317c0c20ce20e64fac803d52bc.svg~tplv-49unhts6dw-image.image"
       />
-      <div class="logo-text">Arco Design Pro</div>
+      <div class="logo-text">{{ appStore?.app_name }}</div>
     </div>
     <div class="content">
       <div class="content-inner">
@@ -19,8 +19,11 @@
 </template>
 
 <script lang="ts" setup>
+  import { useAppStore } from '@/store';
   import Footer from '@/components/footer/index.vue';
   import LoginForm from './components/login-form.vue';
+
+  const appStore = useAppStore();
 </script>
 
 <style lang="less" scoped>
@@ -66,6 +69,7 @@
       // color: var(--color-fill-1);
       color: var(--color-text-1);
       font-size: 20px;
+      font-family: '钉钉进步体 Regular', sans-serif;
     }
   }
 </style>
