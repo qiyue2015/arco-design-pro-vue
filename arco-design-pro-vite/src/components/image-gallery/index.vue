@@ -1,7 +1,6 @@
 <script setup lang="ts">
   import { computed, onMounted, ref, useAttrs, useSlots, watch } from 'vue';
-  import { Message } from '@arco-design/web-vue';
-  import { FileItem } from '@arco-design/web-vue/es/upload/interfaces';
+  import { Message, FileItem } from '@arco-design/web-vue';
   import { getToken } from '@/utils/auth';
   import { FileRecord, deleteFiles, queryFiles } from '@/api/file';
 
