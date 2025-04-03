@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { onMounted, ref } from 'vue';
-  import { FormInstance } from '@arco-design/web-vue/es/form';
+  import { FormInstance } from '@arco-design/web-vue';
   import useLoading from '@/hooks/loading';
   import { queryArticle } from '@/api/article';
 
