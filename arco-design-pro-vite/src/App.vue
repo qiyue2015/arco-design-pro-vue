@@ -38,10 +38,15 @@
         display: 'swap',
       }
     );
-    font.load().then((loadedFont) => {
-      (document.fonts as any).add(loadedFont);
-      isFontLoaded.value = true;
-    });
+    font
+      .load()
+      .then((loadedFont) => {
+        (document.fonts as any).add(loadedFont);
+        isFontLoaded.value = true;
+      })
+      .catch(() => {
+        isFontLoaded.value = true;
+      });
   });
 </script>
 
