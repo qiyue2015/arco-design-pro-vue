@@ -14,7 +14,8 @@
     "lint-staged": "npx lint-staged",
     "lint:fix": "eslint --fix \"./src/**/*.{js,ts,vue}\"",
     "prepare": "husky install",
-    "new": "plop"
+    "new": "plop",
+    "format": "prettier --write ./src && npm run lint:fix"
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx}": [
