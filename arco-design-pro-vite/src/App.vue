@@ -32,7 +32,7 @@
   onMounted(() => {
     const font = new FontFace(
       '钉钉进步体 Regular',
-      `url('//mp-img1.wifixc.com/static/webfont/DingTalk-JinBuTi.woff2') format('woff2'), url('//mp-img1.wifixc.com/static/webfont/DingTalk-JinBuTi.woff') format('woff')`,
+      `url('https://mp-img1.wifixc.com/static/webfont/DingTalk-JinBuTi.woff2') format('woff2'), url('https://mp-img1.wifixc.com/static/webfont/DingTalk-JinBuTi.woff') format('woff')`,
       {
         weight: '400',
         display: 'swap',
