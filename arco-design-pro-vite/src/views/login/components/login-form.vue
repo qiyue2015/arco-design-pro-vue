@@ -59,6 +59,7 @@
   import { useUserStore } from '@/store';
   import useLoading from '@/hooks/loading';
   import type { LoginData } from '@/api/user';
+  import { DEFAULT_ROUTE_NAME } from '@/router/constants';
 
   const router = useRouter();
   const { t } = useI18n();
@@ -90,7 +91,7 @@
         await userStore.login(values as LoginData);
         const { redirect, ...othersQuery } = router.currentRoute.value.query;
         router.push({
-          name: (redirect as string) || 'Workplace',
+          name: (redirect as string) || DEFAULT_ROUTE_NAME,
           query: {
             ...othersQuery,
           },
