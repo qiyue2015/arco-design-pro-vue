@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="page-container">
     <div class="logo">
       <div class="logo-text">{{ appStore?.app_name }}</div>
     </div>
@@ -23,8 +23,11 @@
 </script>
 
 <style lang="less" scoped>
-  .container {
-    background: linear-gradient(173deg, #ecf4ff -0.79%, #d3e1ff 94.5%);
+  .page-container {
+    background-image: url(assets/images/login-bg.png);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
     display: flex;
     height: 100vh;
 
@@ -34,9 +37,11 @@
       flex: 1;
       align-items: center;
       justify-content: center;
-      padding-bottom: 40px;
+      @apply pb-24;
+
       &-inner {
-        padding: 40px 64px;
+        @apply w-full max-w-sm lg:max-w-md;
+        padding: 32px;
         background-color: #ffffff;
         border-radius: 12px;
         overflow: hidden;

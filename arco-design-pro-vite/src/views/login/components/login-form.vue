@@ -118,7 +118,6 @@
 <style lang="less" scoped>
   .login-form {
     &-wrapper {
-      width: 320px;
       text-align: center;
     }
 
