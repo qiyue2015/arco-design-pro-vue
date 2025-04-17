@@ -14,6 +14,8 @@
   import zhCN from '@arco-design/web-vue/es/locale/lang/zh-cn';
   import GlobalSetting from '@/components/global-setting/index.vue';
   import useLocale from '@/hooks/locale';
+  import DingTalkJinBuTiWoff2 from '@/assets/webfont/DingTalk-JinBuTi.woff2';
+  import DingTalkJinBuTiWoff from '@/assets/webfont/DingTalk-JinBuTi.woff';
 
   const { currentLocale } = useLocale();
   const locale = computed(() => {
@@ -32,7 +34,7 @@
   onMounted(() => {
     const font = new FontFace(
       '钉钉进步体 Regular',
-      `url('https://mp-img1.wifixc.com/static/webfont/DingTalk-JinBuTi.woff2') format('woff2'), url('https://mp-img1.wifixc.com/static/webfont/DingTalk-JinBuTi.woff') format('woff')`,
+      `url(${DingTalkJinBuTiWoff2}) format('woff2'), url(${DingTalkJinBuTiWoff}) format('woff')`,
       {
         weight: '400',
         display: 'swap',
