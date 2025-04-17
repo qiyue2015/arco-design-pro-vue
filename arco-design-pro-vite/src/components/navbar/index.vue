@@ -81,6 +81,12 @@
               </a-space>
             </a-doption>
             <a-doption>
+              <a-space @click="changePasswordShow = true">
+                <icon-lock />
+                <span> 修改密码 </span>
+              </a-space>
+            </a-doption>
+            <a-doption>
               <a-space @click="$router.push({ name: 'Info' })">
                 <icon-user />
                 <span>
@@ -108,6 +114,9 @@
         </a-dropdown>
       </li>
     </ul>
+
+    <!-- 修改密码 -->
+    <UserChangePassword v-model:visible="changePasswordShow" />
   </div>
 </template>
 
@@ -118,6 +127,7 @@
   import { useAppStore, useUserStore } from '@/store';
   import useUser from '@/hooks/user';
   import Menu from '@/components/menu/index.vue';
+  import UserChangePassword from '@/components/user/change-password.vue';
   import MessageBox from '../message-box/index.vue';
 
   const appStore = useAppStore();
@@ -166,6 +176,8 @@
     Message.success(res as string);
   };
   const toggleDrawerMenu = inject('toggleDrawerMenu') as () => void;
+
+  const changePasswordShow = ref(false);
 </script>
 
 <style scoped lang="less">
