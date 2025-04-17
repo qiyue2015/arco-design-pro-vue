@@ -20,7 +20,7 @@
 
 <style lang="less" scoped>
   .footer-container {
-    @apply w-full h-24 flex flex-col lg:flex-row justify-center items-center text-center text-sm gap-2 lg:gap-1;
+    @apply w-full h-24 lg:h-10 flex flex-col lg:flex-row justify-center items-center text-center text-sm gap-2 lg:gap-1;
     color: var(--color-text-2);
   }
 </style>
