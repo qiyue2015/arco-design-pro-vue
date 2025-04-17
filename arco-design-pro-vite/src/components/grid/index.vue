@@ -31,6 +31,7 @@
 
 <style lang="less" scoped>
   .grid-card {
+    @apply h-full;
     border-radius: 4px;
     border: none;
     & > :deep(.arco-card-header) {
