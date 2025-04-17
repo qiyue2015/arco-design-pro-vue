@@ -2,11 +2,12 @@
   <div class="grid-toolbar">
     <a-row justify="space-between" align="center">
       <a-space size="medium" fill>
+        <slot name="prepend" />
         <a-button v-if="hasCreate" type="primary" @click="onCreate">新增</a-button>
         <slot name="append" />
       </a-space>
       <a-space size="medium" fill>
-        <slot name="prepend" />
+        <slot name="extra" />
         <a-tooltip v-if="hasRefresh" content="刷新">
           <a-button @click="onRefresh">
             <template #icon><icon-refresh /></template>
