@@ -2,13 +2,8 @@
   <div class="navbar">
     <div class="left-side">
       <a-space>
-        <img
-          alt="logo"
-          src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/dfdba5317c0c20ce20e64fac803d52bc.svg~tplv-49unhts6dw-image.image"
-        />
-        <a-typography-title :style="{ margin: 0, fontSize: '18px', fontFamily: '钉钉进步体 Regular' }" :heading="5">
-          站长引擎
-        </a-typography-title>
+        <div v-if="appStore.device === 'mobile'" class="font-brand text-2xl">A9 Pro</div>
+        <div v-else class="font-brand text-2xl">{{ appStore?.app_name }}</div>
         <icon-menu-fold
           v-if="!topMenu && appStore.device === 'mobile'"
           style="font-size: 22px; cursor: pointer"
@@ -52,7 +47,7 @@
           </template>
         </a-popover>
       </li>
-      <li>
+      <li v-if="appStore.device != 'mobile'">
         <a-tooltip :content="isFullscreen ? $t('settings.navbar.screen.toExit') : $t('settings.navbar.screen.toFull')">
           <a-button class="nav-btn" type="outline" :shape="'circle'" @click="toggleFullScreen">
             <template #icon>
