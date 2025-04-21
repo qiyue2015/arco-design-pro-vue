@@ -163,6 +163,18 @@
         background-color: var(--color-text-3);
       }
     }
+
+    :deep(.arco-menu-vertical) {
+      .arco-menu-inner {
+        padding: 8px;
+      }
+    }
+
+    :deep(.arco-menu-collapsed) {
+      .arco-menu-inner {
+        padding: 4px;
+      }
+    }
   }
 
   .layout-content {
