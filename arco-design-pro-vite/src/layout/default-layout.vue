@@ -175,6 +175,22 @@
         padding: 4px;
       }
     }
+
+    // 左侧菜单
+    :deep(.arco-menu-light) {
+      .arco-menu-item {
+        // 定义选中状态的背景色
+        &.arco-menu-selected {
+          background-color: rgb(var(--arcoblue-6));
+          color: #fff;
+        }
+      }
+
+      // 移除 inline-header 鼠标悬停时的背景色
+      .arco-menu-inline-header:hover {
+        background-color: unset;
+      }
+    }
   }
 
   .layout-content {
