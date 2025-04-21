@@ -2,8 +2,8 @@
   <div class="navbar">
     <div class="left-side">
       <a-space>
-        <div v-if="appStore.device === 'mobile'" class="font-brand text-2xl">A9 Pro</div>
-        <div v-else class="font-brand text-2xl">{{ appStore?.app_name }}</div>
+        <div v-if="appStore.device === 'mobile'" class="font-brand site-name">A9 Pro</div>
+        <div v-else class="font-brand site-name">{{ appStore?.app_name }}</div>
         <icon-menu-fold
           v-if="!topMenu && appStore.device === 'mobile'"
           style="font-size: 22px; cursor: pointer"
@@ -193,6 +193,11 @@
     display: flex;
     align-items: center;
     padding-left: 20px;
+
+    .site-name {
+      font-size: 20px;
+      color: var(--color-text-1);
+    }
   }
 
   .center-side {
