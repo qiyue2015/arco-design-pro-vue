@@ -184,6 +184,9 @@
           background-color: rgb(var(--arcoblue-6));
           color: #fff;
         }
+        .arco-menu-icon {
+          --primary-6: #fff;
+        }
       }
 
       // 移除 inline-header 鼠标悬停时的背景色
