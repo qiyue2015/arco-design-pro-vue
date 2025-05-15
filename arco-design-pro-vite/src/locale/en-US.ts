@@ -1,5 +1,5 @@
 import localeMessageBox from '@/components/message-box/locale/en-US';
-import localeLogin from '@/views/login/locale/en-US';
+import localeLogin from '@/views/auth/locale/en-US';
 
 import localeWorkplace from '@/views/dashboard/workplace/locale/en-US';
 /** simple */

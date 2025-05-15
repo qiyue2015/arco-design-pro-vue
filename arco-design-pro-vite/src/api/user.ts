@@ -10,6 +10,7 @@ export interface LoginData {
 export interface LoginRes {
   token: string;
 }
+
 export function login(data: LoginData) {
   return axios.post<LoginRes>('/api/user/login', data);
 }
@@ -24,4 +25,15 @@ export function getUserInfo() {
 
 export function getMenuList() {
   return axios.post<RouteRecordNormalized[]>('/api/user/menu');
+}
+
+export interface RegisterData {
+  phone: string;
+  code: string;
+  password: string;
+  invite_code?: string;
+}
+
+export function register(data: RegisterData) {
+  return axios.post('/api/user/register', data);
 }
