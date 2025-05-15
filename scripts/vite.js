@@ -73,7 +73,7 @@ const simpleOptions = [
   {
     base: 'src/views',
     accurate: ['dashboard/monitor'], // Accurate to delete
-    excludes: ['login', 'dashboard', 'not-found', 'redirect'],
+    excludes: ['auth', 'dashboard', 'not-found', 'redirect'],
   },
   {
     base: 'src/api',
