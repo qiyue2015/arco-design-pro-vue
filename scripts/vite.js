@@ -73,7 +73,7 @@ const simpleOptions = [
   {
     base: 'src/views',
     accurate: ['dashboard/monitor'], // Accurate to delete
-    excludes: ['auth', 'dashboard', 'not-found', 'redirect'],
+    excludes: ['auth', 'dashboard', 'user', 'not-found', 'redirect'],
   },
   {
     base: 'src/api',
@@ -81,7 +81,7 @@ const simpleOptions = [
   },
   {
     base: 'src/router/routes/modules',
-    excludes: ['index', 'dashboard'],
+    excludes: ['index', 'dashboard', 'user'],
   },
 ];
 
