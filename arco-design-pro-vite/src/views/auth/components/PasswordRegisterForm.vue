@@ -13,7 +13,7 @@
         </a-input>
       </a-form-item>
       <a-form-item field="code" :validate-trigger="['change', 'blur']" hide-label>
-        <SmsCodeInput v-model="userInfo.code" :phone="userInfo.phone" />
+        <InputVerifyCode v-model="userInfo.code" :account="userInfo.phone" type="phone" />
       </a-form-item>
       <a-form-item field="invite_code" :validate-trigger="['change', 'blur']" hide-label>
         <a-input v-model="userInfo.invite_code" placeholder="邀请码（可注册后补填）" allow-clear />
@@ -34,8 +34,8 @@
   import { useRouter } from 'vue-router';
   import { Message } from '@arco-design/web-vue';
   import { DEFAULT_ROUTE_NAME } from '@/router/constants';
+  import InputVerifyCode from '@/components/input-verify-code/index.vue';
   import AgreementNotice from './AgreementNotice.vue';
-  import SmsCodeInput from './SmsCodeInput.vue';
 
   const { t } = useI18n();
   const userStore = useUserStore();

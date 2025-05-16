@@ -14,7 +14,6 @@ import '@/views/form/group/mock';
 import '@/views/profile/basic/mock';
 
 import '@/views/user/info/mock';
-import '@/views/user/setting/mock';
 
 import '@/views/form/tiptap/mock';
 /** simple end */

@@ -2,6 +2,8 @@ import localeMessageBox from '@/components/message-box/locale/en-US';
 import localeLogin from '@/views/auth/locale/en-US';
 
 import localeWorkplace from '@/views/dashboard/workplace/locale/en-US';
+import localeUserInfo from '@/views/user/info/locale/en-US';
+import localeUserAuthentication from '@/views/user/authentication/locale/en-US';
 /** simple */
 import localeSearchTable from '@/views/list/search-table/locale/en-US';
 import localeCardList from '@/views/list/card/locale/en-US';
@@ -17,9 +19,6 @@ import localeError from '@/views/result/error/locale/en-US';
 import locale403 from '@/views/exception/403/locale/en-US';
 import locale404 from '@/views/exception/404/locale/en-US';
 import locale500 from '@/views/exception/500/locale/en-US';
-
-import localeUserInfo from '@/views/user/info/locale/en-US';
-import localeUserSetting from '@/views/user/setting/locale/en-US';
 /** simple end */
 import localeSettings from './en-US/settings';
 
@@ -34,7 +33,7 @@ export default {
   'menu.form': 'Form',
   'menu.profile': 'Profile',
   'menu.visualization': 'Data Visualization',
-  'menu.user': 'User Center',
+  'menu.user': 'Account Management',
   'menu.arcoWebsite': 'Arco Design',
   'menu.faq': 'FAQ',
   'navbar.docs': 'Docs',
@@ -44,6 +43,8 @@ export default {
   ...localeMessageBox,
   ...localeLogin,
   ...localeWorkplace,
+  ...localeUserInfo,
+  ...localeUserAuthentication,
   /** simple */
   ...localeSearchTable,
   ...localeCardList,
@@ -55,7 +56,5 @@ export default {
   ...locale403,
   ...locale404,
   ...locale500,
-  ...localeUserInfo,
-  ...localeUserSetting,
   /** simple end */
 };

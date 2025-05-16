@@ -1,5 +1,15 @@
 import axios from 'axios';
 
+export interface BasicInfoModel {
+  email: string;
+  nickname: string;
+  countryRegion: string;
+  area: string;
+  address: string;
+  profile: string;
+  phone: string;
+}
+
 export interface MyProjectRecord {
   id: number;
   name: string;
@@ -35,17 +45,8 @@ export function queryLatestActivity() {
   return axios.post<LatestActivity[]>('/api/user/latest-activity');
 }
 
-export function saveUserInfo() {
-  return axios.post('/api/user/save-info');
-}
-
-export interface BasicInfoModel {
-  email: string;
-  nickname: string;
-  countryRegion: string;
-  area: string;
-  address: string;
-  profile: string;
+export function saveUserInfo(data: Partial<BasicInfoModel>) {
+  return axios.post('/api/user/save-info', data);
 }
 
 export interface EnterpriseCertificationModel {
@@ -85,4 +86,14 @@ export function userUploadApi(
 ) {
   // const controller = new AbortController();
   return axios.post('/api/user/upload', data, config);
+}
+
+// 发送短信验证码
+export function sendPhoneCode(phone: string) {
+  return axios.post('/api/user/send-sms-code', { phone });
+}
+
+// 修改用户资料
+export function updateUserInfo(data: Partial<BasicInfoModel>) {
+  return axios.post('/api/user/update-info', data);
 }

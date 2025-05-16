@@ -1,18 +1,22 @@
 <template>
   <a-tabs class="login-tab" :active-key="loginType" @change="onTabChange">
+    <a-tab-pane key="password" title="账号登录">
+      <PasswordLoginForm />
+    </a-tab-pane>
     <a-tab-pane key="phone" title="手机号登录">
       <PhoneLoginForm />
     </a-tab-pane>
-    <a-tab-pane key="password" title="账号登录">
-      <PasswordLoginForm />
+    <a-tab-pane key="mail" title="邮箱登录">
+      <MailLoginForm />
     </a-tab-pane>
   </a-tabs>
 </template>
 
 <script lang="ts" setup>
-  import { defineProps, defineEmits, computed } from 'vue';
+  import { computed } from 'vue';
   import PhoneLoginForm from './components/PhoneLoginForm.vue';
   import PasswordLoginForm from './components/PasswordLoginForm.vue';
+  import MailLoginForm from './components/MailLoginForm.vue';
 
   const props = defineProps<{ loginType: 'phone' | 'password' }>();
   const emits = defineEmits(['update:loginType']);

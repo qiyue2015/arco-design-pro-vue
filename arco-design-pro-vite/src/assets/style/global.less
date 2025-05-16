@@ -54,9 +54,20 @@
       border-bottom: none;
     }
   }
+
+  .arco-table-container {
+    overflow: hidden;
+  }
 }
 
 @layer utilities {
+  .page-container {
+    @apply container h-full p-4 flex flex-col flex-1 gap-4;
+    .grid-card {
+      @apply flex-1;
+    }
+  }
+
   // 品牌字体
   .font-brand {
     font-family: '钉钉进步体 Regular', sans-serif;

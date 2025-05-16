@@ -13,6 +13,7 @@ setupMock({
       if (isLogin()) {
         const role = window.localStorage.getItem('userRole') || 'admin';
         return successResponseWrap({
+          id: '77d5b61e-a98a-5754-b7b5-4f1df0ff9cf9',
           name: 'admin',
           avatar: '//lf1-xgcdn-tos.pstatp.com/obj/vcloud/vadmin/start.8e0e4855ee346a46ccff8ff3e24db27b.png',
           email: 'wangliqun@email.com',
@@ -29,6 +30,7 @@ setupMock({
           accountId: '15012312300',
           certification: 1,
           role,
+          is_identity_verified: Mock.Random.boolean(),
         });
       }
       return failResponseWrap(null, '未登录', 50008);

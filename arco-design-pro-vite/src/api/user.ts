@@ -37,3 +37,12 @@ export interface RegisterData {
 export function register(data: RegisterData) {
   return axios.post('/api/user/register', data);
 }
+
+// 上传头像
+export function uploadAvatar(data: FormData) {
+  return axios.post('/api/user/upload-avatar', data, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+}

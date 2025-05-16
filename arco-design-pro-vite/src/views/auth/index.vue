@@ -10,17 +10,15 @@
         <template v-if="$route.name === 'login'">
           <Login v-model:login-type="loginType" />
           <div class="text-center text-sm">
-            <template v-if="loginType === 'phone'">
-              <a-divider> 其他登录方式 </a-divider>
-              <a-space size="large" class="mt-4">
-                <icon-wechat size="32px" style="color: #1aad19" />
-                <icon-google size="28px" style="color: #4285f4" />
-                <icon-github size="26px" />
-              </a-space>
-            </template>
-            <template v-if="loginType === 'password'">
+            <a-divider> 其他登录方式 </a-divider>
+            <a-space size="large" class="mt-4">
+              <icon-wechat size="32px" style="color: #1aad19" />
+              <icon-google size="28px" style="color: #4285f4" />
+              <icon-github size="26px" />
+            </a-space>
+            <div v-if="loginType === 'password'" class="mt-10">
               没有账号？ <a-link class="text-sm" @click="onRegister">现在就注册</a-link>
-            </template>
+            </div>
           </div>
         </template>
 
@@ -61,7 +59,7 @@
   });
 
   // 登录方式
-  const loginType = ref<'password' | 'phone'>('phone');
+  const loginType = ref<'password' | 'phone'>('password');
 
   // 注册方式
   const registerType = ref<'password' | 'phone'>('phone');
@@ -95,7 +93,7 @@
       @apply relative flex flex-1 items-center justify-center m-6 md:m-0;
 
       &-inner {
-        @apply w-full p-6 lg:p-12;
+        @apply w-full p-6 lg:p-10;
         background: var(--color-bg-white);
         border-radius: 12px;
         max-width: 500px;
