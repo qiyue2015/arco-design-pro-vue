@@ -43,7 +43,8 @@
   loadImage();
 
   const selectImage = () => {
-    props.editor?.commands.setNodeSelection(props.getPos());
+    const pos = typeof props.getPos === 'function' ? props.getPos() : 0;
+    props.editor?.commands.setNodeSelection(pos ?? 0);
   };
 
   const onSliderChange = (value: any) => {

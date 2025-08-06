@@ -2,6 +2,7 @@
   import { watch, useAttrs } from 'vue';
   import { EditorContent, useEditor } from '@tiptap/vue-3';
   import StarterKit from '@tiptap/starter-kit';
+  import type { AnyExtension } from '@tiptap/vue-3';
   import Placeholder from '@tiptap/extension-placeholder';
   import ControlGroup from '@/components/tiptap/control-group.vue';
   import Highlight from '@tiptap/extension-highlight';
@@ -30,7 +31,7 @@
         heading: {
           levels: [1, 2, 3],
         },
-      }),
+      }) as AnyExtension,
       Placeholder.configure({
         placeholder: attrs?.placeholder as string,
       }),
