@@ -80,6 +80,14 @@ function seedRemote(directory) {
 
 function cloneRemote(remote, directory) {
   run('git', ['clone', '--branch', 'main', remote, directory]);
+  run('git', ['-C', directory, 'config', 'user.name', 'Release Test']);
+  run('git', [
+    '-C',
+    directory,
+    'config',
+    'user.email',
+    'release-test@example.com',
+  ]);
   return directory;
 }
 
