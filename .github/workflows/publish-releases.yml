@@ -1,0 +1,187 @@
+name: Publish generated editions
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-generated-editions-main
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out source template
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Check release version
+        id: plan
+        run: node scripts/release/plan.mjs --github-output "$GITHUB_OUTPUT"
+
+      - name: Report unchanged release version
+        if: steps.plan.outputs.publish_needed != 'true'
+        run: echo "${{ steps.plan.outputs.tag }} is already synchronized"
+
+      - name: Require cross-repository credential
+        if: steps.plan.outputs.publish_needed == 'true'
+        env:
+          RELEASE_TOKEN: ${{ secrets.RELEASE_REPOSITORIES_TOKEN }}
+        run: |
+          if [ -z "$RELEASE_TOKEN" ]; then
+            echo "::error::Configure RELEASE_REPOSITORIES_TOKEN with Contents read/write access to both release repositories."
+            exit 1
+          fi
+
+      - name: Set up pnpm
+        if: steps.plan.outputs.publish_needed == 'true'
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+        with:
+          version: 10.5.2
+
+      - name: Set up Node.js
+        if: steps.plan.outputs.publish_needed == 'true'
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 20
+          cache: pnpm
+          cache-dependency-path: |
+            pnpm-lock.yaml
+            arco-design-pro-vite/pnpm-lock.yaml
+
+      - name: Install generator dependencies
+        if: steps.plan.outputs.publish_needed == 'true'
+        run: pnpm install --frozen-lockfile --ignore-scripts
+
+      - name: Test release automation
+        if: steps.plan.outputs.publish_needed == 'true'
+        run: node --test scripts/release/release-automation.test.mjs
+
+      - name: Generate both editions in temporary directories
+        if: steps.plan.outputs.publish_needed == 'true'
+        id: generated
+        run: |
+          release_root="$RUNNER_TEMP/arco-generated-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+          full_path="$release_root/full"
+          simple_path="$release_root/simple"
+          mkdir -p "$release_root"
+          node scripts/vite.js --projectPath="$full_path"
+          node scripts/vite.js --simple --projectPath="$simple_path"
+          node scripts/release/stamp-version.mjs --directory "$full_path"
+          node scripts/release/stamp-version.mjs --directory "$simple_path"
+          echo "release_root=$release_root" >> "$GITHUB_OUTPUT"
+          echo "full_path=$full_path" >> "$GITHUB_OUTPUT"
+          echo "simple_path=$simple_path" >> "$GITHUB_OUTPUT"
+
+      - name: Install, type-check, and build both editions
+        if: steps.plan.outputs.publish_needed == 'true'
+        env:
+          FULL_PATH: ${{ steps.generated.outputs.full_path }}
+          SIMPLE_PATH: ${{ steps.generated.outputs.simple_path }}
+        run: |
+          validation_failed=0
+          for edition_path in "$FULL_PATH" "$SIMPLE_PATH"; do
+            if ! pnpm --dir "$edition_path" install --frozen-lockfile --ignore-scripts; then
+              validation_failed=1
+              continue
+            fi
+            if ! pnpm --dir "$edition_path" type:check; then
+              validation_failed=1
+            fi
+            if ! pnpm --dir "$edition_path" build; then
+              validation_failed=1
+            fi
+          done
+          exit "$validation_failed"
+
+      - name: Clone release repositories
+        if: steps.plan.outputs.publish_needed == 'true'
+        id: targets
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_REPOSITORIES_TOKEN }}
+          FULL_REPOSITORY: ${{ steps.plan.outputs.full_repository }}
+          SIMPLE_REPOSITORY: ${{ steps.plan.outputs.simple_repository }}
+        run: |
+          target_root="$RUNNER_TEMP/arco-targets-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+          full_target="$target_root/full"
+          simple_target="$target_root/simple"
+          mkdir -p "$target_root"
+          gh auth setup-git
+          gh repo clone "$FULL_REPOSITORY" "$full_target" -- --branch main
+          gh repo clone "$SIMPLE_REPOSITORY" "$simple_target" -- --branch main
+          echo "full_target=$full_target" >> "$GITHUB_OUTPUT"
+          echo "simple_target=$simple_target" >> "$GITHUB_OUTPUT"
+
+      - name: Prepare shared release metadata and commit message
+        if: steps.plan.outputs.publish_needed == 'true'
+        id: release
+        env:
+          FULL_TARGET: ${{ steps.targets.outputs.full_target }}
+          SIMPLE_TARGET: ${{ steps.targets.outputs.simple_target }}
+        run: |
+          message_path="$RUNNER_TEMP/release-commit-message.txt"
+          metadata_path="$RUNNER_TEMP/release-source.json"
+          node scripts/release/prepare-release.mjs \
+            --full-target "$FULL_TARGET" \
+            --simple-target "$SIMPLE_TARGET" \
+            --source-commit "$GITHUB_SHA" \
+            --message-output "$message_path" \
+            --metadata-output "$metadata_path"
+          echo "message_path=$message_path" >> "$GITHUB_OUTPUT"
+          echo "metadata_path=$metadata_path" >> "$GITHUB_OUTPUT"
+
+      - name: Synchronize full edition safely
+        if: steps.plan.outputs.full_needs_publish == 'true'
+        id: sync_full
+        run: |
+          node scripts/release/sync-generated.mjs \
+            --generated "${{ steps.generated.outputs.full_path }}" \
+            --target "${{ steps.targets.outputs.full_target }}" \
+            --edition full \
+            --source-commit "$GITHUB_SHA" \
+            --metadata "${{ steps.release.outputs.metadata_path }}" \
+            --github-output "$GITHUB_OUTPUT"
+
+      - name: Synchronize simple edition safely
+        if: steps.plan.outputs.simple_needs_publish == 'true'
+        id: sync_simple
+        run: |
+          node scripts/release/sync-generated.mjs \
+            --generated "${{ steps.generated.outputs.simple_path }}" \
+            --target "${{ steps.targets.outputs.simple_target }}" \
+            --edition simple \
+            --source-commit "$GITHUB_SHA" \
+            --metadata "${{ steps.release.outputs.metadata_path }}" \
+            --github-output "$GITHUB_OUTPUT"
+
+      - name: Publish full edition
+        if: steps.plan.outputs.full_needs_publish == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_REPOSITORIES_TOKEN }}
+        run: |
+          node scripts/release/publish-release.mjs \
+            --target "${{ steps.targets.outputs.full_target }}" \
+            --status "${{ steps.sync_full.outputs.status }}" \
+            --tag "${{ steps.plan.outputs.tag }}" \
+            --source-commit "$GITHUB_SHA" \
+            --message "${{ steps.release.outputs.message_path }}"
+
+      - name: Publish simple edition
+        if: steps.plan.outputs.simple_needs_publish == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_REPOSITORIES_TOKEN }}
+        run: |
+          node scripts/release/publish-release.mjs \
+            --target "${{ steps.targets.outputs.simple_target }}" \
+            --status "${{ steps.sync_simple.outputs.status }}" \
+            --tag "${{ steps.plan.outputs.tag }}" \
+            --source-commit "$GITHUB_SHA" \
+            --message "${{ steps.release.outputs.message_path }}"

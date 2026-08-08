@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "sourceRepository": "qiyue2015/arco-design-pro-vue",
+  "editions": {
+    "full": {
+      "repository": "qiyue2015/arco-design-pro-vite",
+      "managedRoots": ["config", "plop-templates", "src"],
+      "preservePaths": [".github", "LICENSE", "README.md"]
+    },
+    "simple": {
+      "repository": "qiyue2015/arco-design-pro-vite-simple",
+      "managedRoots": ["config", "plop-templates", "src"],
+      "preservePaths": [
+        ".github",
+        ".env.staging",
+        "config/vite.config.staging.ts",
+        "qupload.conf"
+      ]
+    }
+  }
+}

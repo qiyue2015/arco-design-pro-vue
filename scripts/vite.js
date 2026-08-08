@@ -100,39 +100,34 @@ const runSimpleMode = () => {
   deleteFiles();
   simplifyFiles.forEach((el) => {
     const file = path.resolve(projectPath, path.join('src', el));
-    fs.readFile(file, 'utf8', (err, content) => {
-      if (err) return console.error(err);
-      const main = content.replace(matchReg, '');
-      const formatTxt = prettier.format(main, {
-        ...prettierOpt,
-        parser: 'babel',
-      });
-      fs.writeFile(file, formatTxt, 'utf8', function (err) {
-        if (err) return console.error(err);
-      });
+    const content = fs.readFileSync(file, 'utf8');
+    const main = content.replace(matchReg, '');
+    const formatTxt = prettier.format(main, {
+      ...prettierOpt,
+      parser: 'babel',
     });
+    fs.writeFileSync(file, formatTxt, 'utf8');
   });
 };
 
 const deleteFiles = () => {
   simpleOptions.forEach((option) => {
     const baseDir = path.resolve(projectPath, option.base);
-    fs.readdir(baseDir, (error, files) => {
-      files.forEach((fileName) => {
-        if (
-          option.excludes &&
-          option.excludes.find((name) =>
-            new RegExp(`^${name}(.(ts|js|vue|json|jsx|tsx))?$`).test(fileName)
-          )
-        ) {
-          return;
-        }
-        fs.remove(path.join(baseDir, fileName));
-      });
+    const files = fs.readdirSync(baseDir);
+    files.forEach((fileName) => {
+      if (
+        option.excludes &&
+        option.excludes.find((name) =>
+          new RegExp(`^${name}(.(ts|js|vue|json|jsx|tsx))?$`).test(fileName)
+        )
+      ) {
+        return;
+      }
+      fs.removeSync(path.join(baseDir, fileName));
     });
     if (option.accurate) {
       option.accurate.forEach((el) => {
-        fs.remove(path.join(baseDir, el));
+        fs.removeSync(path.join(baseDir, el));
       });
     }
   });
@@ -141,17 +136,13 @@ const deleteFiles = () => {
 const runNormalMode = () => {
   simplifyFiles.forEach((el) => {
     const file = path.resolve(projectPath, path.join('src', el));
-    fs.readFile(file, 'utf8', (err, content) => {
-      if (err) return console.error(err);
-      const result = content.replace(regSum, '');
-      const formatTxt = prettier.format(result, {
-        ...prettierOpt,
-        parser: 'babel',
-      });
-      fs.writeFile(file, formatTxt, 'utf8', function (err) {
-        if (err) return console.error(err);
-      });
+    const content = fs.readFileSync(file, 'utf8');
+    const result = content.replace(regSum, '');
+    const formatTxt = prettier.format(result, {
+      ...prettierOpt,
+      parser: 'babel',
     });
+    fs.writeFileSync(file, formatTxt, 'utf8');
   });
 };
 
