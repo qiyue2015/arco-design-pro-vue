@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
 import NProgress from 'nprogress'; // progress bar
 import 'nprogress/nprogress.css';
 
@@ -9,8 +9,13 @@ import { DEFAULT_ROUTE_NAME } from './constants';
 
 NProgress.configure({ showSpinner: false }); // NProgress Configuration
 
+const history =
+  import.meta.env.VITE_ROUTER_MODE === 'hash'
+    ? createWebHashHistory(import.meta.env.BASE_URL)
+    : createWebHistory(import.meta.env.BASE_URL);
+
 const router = createRouter({
-  history: createWebHistory(),
+  history,
   routes: [
     {
       path: '/',
