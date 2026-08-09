@@ -22,6 +22,7 @@ const USER: AppRouteRecordRaw = {
         roles: ['*'],
       },
     },
+    /** simple */
     {
       path: 'authentication',
       name: 'Authentication',
@@ -32,6 +33,7 @@ const USER: AppRouteRecordRaw = {
         roles: ['*'],
       },
     },
+    /** simple end */
   ],
 };
 

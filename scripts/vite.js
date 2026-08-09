@@ -72,7 +72,12 @@ Object.keys(maps).forEach((src) => {
 const simpleOptions = [
   {
     base: 'src/views',
-    accurate: ['dashboard/monitor'], // Accurate to delete
+    accurate: [
+      'dashboard/monitor',
+      'user/authentication',
+      'user/info/components/IdentityVerifiedCard.vue',
+      'user/info/icons/cer-success.svg',
+    ], // Accurate to delete
     excludes: ['auth', 'dashboard', 'user', 'not-found', 'redirect'],
   },
   {
@@ -85,15 +90,21 @@ const simpleOptions = [
   },
 ];
 
-const regSum = /\/\*{2} simple( end)? \*\//g;
+const regSum = /(?:\/\*\* simple(?: end)? \*\/|<!-- simple(?: end)? -->)/g;
 const matchReg =
-  /(\/\*{2} simple \*\/)(?:(?!\/\*{2} simple end \*\/).|\n)*?\/\*{2} simple end \*\//gm;
+  /(?:\/\*\* simple \*\/|<!-- simple -->)[\s\S]*?(?:\/\*\* simple end \*\/|<!-- simple end -->)/g;
 
 const simplifyFiles = [
   'locale/en-US.ts',
   'locale/zh-CN.ts',
   'mock/index.ts',
+  'mock/user.ts',
   'router/routes/modules/dashboard.ts',
+  'router/routes/modules/user.ts',
+  'store/modules/user/index.ts',
+  'store/modules/user/types.ts',
+  'views/user/info/index.vue',
+  'views/user/info/components/AccountInfoCard.vue',
 ];
 
 const runSimpleMode = () => {
@@ -104,7 +115,7 @@ const runSimpleMode = () => {
     const main = content.replace(matchReg, '');
     const formatTxt = prettier.format(main, {
       ...prettierOpt,
-      parser: 'babel',
+      parser: path.extname(file) === '.vue' ? 'vue' : 'babel',
     });
     fs.writeFileSync(file, formatTxt, 'utf8');
   });
@@ -140,7 +151,7 @@ const runNormalMode = () => {
     const result = content.replace(regSum, '');
     const formatTxt = prettier.format(result, {
       ...prettierOpt,
-      parser: 'babel',
+      parser: path.extname(file) === '.vue' ? 'vue' : 'babel',
     });
     fs.writeFileSync(file, formatTxt, 'utf8');
   });

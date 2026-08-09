@@ -3,7 +3,9 @@ import localeLogin from '@/views/auth/locale/zh-CN';
 
 import localeWorkplace from '@/views/dashboard/workplace/locale/zh-CN';
 import localeUserInfo from '@/views/user/info/locale/zh-CN';
+/** simple */
 import localeUserAuthentication from '@/views/user/authentication/locale/zh-CN';
+/** simple end */
 /** simple */
 import localeSearchTable from '@/views/list/search-table/locale/zh-CN';
 import localeCardList from '@/views/list/card/locale/zh-CN';
@@ -44,7 +46,9 @@ export default {
   ...localeLogin,
   ...localeWorkplace,
   ...localeUserInfo,
+  /** simple */
   ...localeUserAuthentication,
+  /** simple end */
   /** simple */
   ...localeSearchTable,
   ...localeCardList,

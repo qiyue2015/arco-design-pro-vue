@@ -35,7 +35,9 @@
           </a-descriptions-item>
         </a-descriptions>
       </div>
+      <!-- simple -->
       <a-button type="primary" @click="$router.push({ name: 'Authentication' })">实名认证</a-button>
+      <!-- simple end -->
       <a-button type="outline" @click="onEditAccountInfo">编辑资料</a-button>
     </div>
 

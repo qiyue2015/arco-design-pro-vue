@@ -4,9 +4,11 @@
       <a-col :span="24">
         <AccountInfoCard title="账号信息" class="general-card" />
       </a-col>
+      <!-- simple -->
       <a-col :span="24">
         <IdentityVerifiedCard title="实名认证" class="general-card" />
       </a-col>
+      <!-- simple end -->
       <a-col :span="24">
         <AuthMethodList title="登录方式" class="general-card flex-1" />
       </a-col>
@@ -17,7 +19,9 @@
 <script lang="ts" setup>
   import AccountInfoCard from './components/AccountInfoCard.vue';
   import AuthMethodList from './components/AuthMethodList.vue';
+  /** simple */
   import IdentityVerifiedCard from './components/IdentityVerifiedCard.vue';
+  /** simple end */
 
   defineOptions({ name: 'UserInfo' });
 </script>

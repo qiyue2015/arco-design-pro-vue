@@ -49,6 +49,27 @@ function makeTempDirectory(name) {
   return fs.mkdtempSync(path.join(os.tmpdir(), `${name}-`));
 }
 
+function walkFiles(directory) {
+  return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const entryPath = path.join(directory, entry.name);
+    return entry.isDirectory() ? walkFiles(entryPath) : entryPath;
+  });
+}
+
+function assertNoSimpleMarkers(projectPath) {
+  const blockMarker = Buffer.from('/** simple');
+  const templateMarker = Buffer.from('<!-- simple');
+
+  walkFiles(path.join(projectPath, 'src')).forEach((filePath) => {
+    const content = fs.readFileSync(filePath);
+    assert.equal(
+      content.includes(blockMarker) || content.includes(templateMarker),
+      false,
+      `simple marker remains in ${path.relative(projectPath, filePath)}`
+    );
+  });
+}
+
 function initRepository(directory) {
   fs.mkdirSync(directory, { recursive: true });
   run('git', ['init', '-b', 'main', directory]);
@@ -196,6 +217,124 @@ function createSourceHistory(directory) {
   const head = run('git', ['-C', directory, 'rev-parse', 'HEAD']).stdout.trim();
   return { base, head };
 }
+
+test('vite generator keeps identity verification only in the full edition', () => {
+  const directory = makeTempDirectory('vite-generator-identity');
+  const generator = path.join(repositoryRoot, 'scripts/vite.js');
+  const full = path.join(directory, 'full');
+  const simple = path.join(directory, 'simple');
+
+  run(process.execPath, [generator, `--projectPath=${full}`]);
+  run(process.execPath, [generator, '--simple', `--projectPath=${simple}`]);
+
+  const relativeFiles = {
+    route: 'src/router/routes/modules/user.ts',
+    infoView: 'src/views/user/info/index.vue',
+    accountCard: 'src/views/user/info/components/AccountInfoCard.vue',
+    localeEn: 'src/locale/en-US.ts',
+    localeZh: 'src/locale/zh-CN.ts',
+    mock: 'src/mock/user.ts',
+    store: 'src/store/modules/user/index.ts',
+    storeTypes: 'src/store/modules/user/types.ts',
+  };
+  const readGenerated = (projectPath, relativePath) =>
+    fs.readFileSync(path.join(projectPath, relativePath), 'utf8');
+
+  assert.equal(
+    fs.existsSync(path.join(full, 'src/views/user/authentication/index.vue')),
+    true
+  );
+  assert.equal(
+    fs.existsSync(
+      path.join(full, 'src/views/user/info/components/IdentityVerifiedCard.vue')
+    ),
+    true
+  );
+  assert.equal(
+    fs.existsSync(path.join(full, 'src/views/user/info/icons/cer-success.svg')),
+    true
+  );
+  assert.match(readGenerated(full, relativeFiles.route), /Authentication/);
+  assert.match(
+    readGenerated(full, relativeFiles.infoView),
+    /IdentityVerifiedCard/
+  );
+  assert.match(
+    readGenerated(full, relativeFiles.accountCard),
+    /name: 'Authentication'/
+  );
+  assert.match(
+    readGenerated(full, relativeFiles.localeEn),
+    /localeUserAuthentication/
+  );
+  assert.match(
+    readGenerated(full, relativeFiles.localeZh),
+    /localeUserAuthentication/
+  );
+  assert.match(readGenerated(full, relativeFiles.mock), /is_identity_verified/);
+  assert.match(
+    readGenerated(full, relativeFiles.store),
+    /is_identity_verified/
+  );
+  assert.match(
+    readGenerated(full, relativeFiles.storeTypes),
+    /is_identity_verified/
+  );
+  assertNoSimpleMarkers(full);
+
+  assert.equal(
+    fs.existsSync(path.join(simple, 'src/views/user/authentication')),
+    false
+  );
+  assert.equal(
+    fs.existsSync(
+      path.join(
+        simple,
+        'src/views/user/info/components/IdentityVerifiedCard.vue'
+      )
+    ),
+    false
+  );
+  assert.equal(
+    fs.existsSync(
+      path.join(simple, 'src/views/user/info/icons/cer-success.svg')
+    ),
+    false
+  );
+  assert.doesNotMatch(
+    readGenerated(simple, relativeFiles.route),
+    /Authentication|authentication/
+  );
+  assert.doesNotMatch(
+    readGenerated(simple, relativeFiles.infoView),
+    /IdentityVerifiedCard|实名认证/
+  );
+  assert.doesNotMatch(
+    readGenerated(simple, relativeFiles.accountCard),
+    /Authentication|实名认证/
+  );
+  assert.doesNotMatch(
+    readGenerated(simple, relativeFiles.localeEn),
+    /localeUserAuthentication|user\/authentication/
+  );
+  assert.doesNotMatch(
+    readGenerated(simple, relativeFiles.localeZh),
+    /localeUserAuthentication|user\/authentication/
+  );
+  assert.doesNotMatch(
+    readGenerated(simple, relativeFiles.mock),
+    /is_identity_verified/
+  );
+  assert.doesNotMatch(
+    readGenerated(simple, relativeFiles.store),
+    /is_identity_verified/
+  );
+  assert.doesNotMatch(
+    readGenerated(simple, relativeFiles.storeTypes),
+    /is_identity_verified/
+  );
+  assertNoSimpleMarkers(simple);
+});
 
 test('release plan handles initial, complete, and one-sided publication', () => {
   const directory = makeTempDirectory('release-plan');
