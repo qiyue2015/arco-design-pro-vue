@@ -15,6 +15,10 @@ Both editions are independent releases. `release-version.json` is their only ver
 
 `origin` owns this customized template (`git@github.com:qiyue2015/arco-design-pro-vue.git`); local `main` tracks `origin/main`. `upstream` is the official repository (`git@github.com:arco-design/arco-design-pro-vue.git`) and is only for reviewing official updates. Preserve local customizations during integration and push to `origin`, never `upstream`. Release repositories have independent remotes.
 
+## Upstream Compatibility & Local Patches
+
+Treat the upstream implementation as the default and keep long-lived differences small and reviewable. Avoid unrelated refactors, bulk formatting, directory reshaping, broad rewrites, or dependency churn in upstream-owned code. Modify upstream code only for a clear local requirement, a generation or release need, or a reproducible upstream defect. Prefer existing configuration and extension points when they remain simpler, but do not add indirection solely to avoid touching an upstream file. Keep necessary changes narrow, semantic, and regression-tested. Structure upstream bug fixes so they can be contributed upstream and removed after an acceptable official fix lands. During upstream integration, re-evaluate overlapping local patches instead of preserving them mechanically.
+
 ## Development & Generation Workflow
 
 Run application commands from `arco-design-pro-vite/`:
