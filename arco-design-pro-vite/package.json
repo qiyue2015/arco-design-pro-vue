@@ -45,7 +45,6 @@
     "pinia": "^2.3.1",
     "pinia-plugin-persistedstate": "^4.4.1",
     "query-string": "^8.2.0",
-    "quill": "^2.0.3",
     "sortablejs": "^1.15.6",
     "vue": "^3.5.18",
     "vue-i18n": "^9.14.5",
