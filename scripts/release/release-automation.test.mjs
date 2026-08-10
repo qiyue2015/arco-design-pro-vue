@@ -951,10 +951,6 @@ test('workflow pins Node 24 before Node commands and uses the tested publisher',
     path.join(repositoryRoot, '.github/workflows/publish-releases.yml'),
     'utf8'
   );
-  const nodeVersion = fs.readFileSync(
-    path.join(repositoryRoot, '.node-version'),
-    'utf8'
-  );
   const sourcePackage = JSON.parse(
     fs.readFileSync(
       path.join(repositoryRoot, 'arco-design-pro-vite/package.json'),
@@ -963,7 +959,6 @@ test('workflow pins Node 24 before Node commands and uses the tested publisher',
   );
   assert.doesNotMatch(workflow, /workflow_dispatch|release:\s*\n/);
   assert.match(workflow, /steps\.plan\.outputs\.publish_needed == 'true'/);
-  assert.equal(nodeVersion.trim(), '24');
   assert.equal(sourcePackage.engines.node, '>=14.0.0');
   assert.match(
     workflow,
@@ -977,7 +972,8 @@ test('workflow pins Node 24 before Node commands and uses the tested publisher',
     workflow,
     /actions\/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4\.4\.0/
   );
-  assert.equal(workflow.match(/node-version-file: \.node-version/g)?.length, 2);
+  assert.equal(workflow.match(/node-version:\s*24/g)?.length, 2);
+  assert.doesNotMatch(workflow, /node-version-file:/);
   assert.doesNotMatch(workflow, /node-version:\s*20/);
   const planningNodeSetup = workflow.indexOf(
     '- name: Set up Node.js for release planning'
