@@ -218,7 +218,7 @@ function createSourceHistory(directory) {
   return { base, head };
 }
 
-test('vite generator keeps identity verification only in the full edition', () => {
+test('vite generator keeps full-only features out of the simple edition', () => {
   const directory = makeTempDirectory('vite-generator-identity');
   const generator = path.join(repositoryRoot, 'scripts/vite.js');
   const full = path.join(directory, 'full');
@@ -280,6 +280,30 @@ test('vite generator keeps identity verification only in the full edition', () =
     readGenerated(full, relativeFiles.storeTypes),
     /is_identity_verified/
   );
+  assert.equal(
+    JSON.parse(readGenerated(full, 'package.json')).dependencies[
+      '@admin9-labs/admin9-ui'
+    ],
+    '0.3.0'
+  );
+  assert.equal(fs.existsSync(path.join(full, 'src/api/media.ts')), true);
+  assert.equal(fs.existsSync(path.join(full, 'src/mock/media.ts')), true);
+  assert.equal(
+    fs.existsSync(path.join(full, 'src/views/list/media-library/index.vue')),
+    true
+  );
+  assert.match(
+    readGenerated(full, 'src/router/routes/modules/list.ts'),
+    /MediaLibrary/
+  );
+  assert.match(
+    readGenerated(full, 'src/views/form/group/index.vue'),
+    /AIconPicker[\s\S]*AMediaPicker/
+  );
+  assert.match(
+    readGenerated(full, 'src/views/form/tiptap/index.vue'),
+    /ATiptapEditor/
+  );
   assertNoSimpleMarkers(full);
 
   assert.equal(
@@ -332,6 +356,38 @@ test('vite generator keeps identity verification only in the full edition', () =
   assert.doesNotMatch(
     readGenerated(simple, relativeFiles.storeTypes),
     /is_identity_verified/
+  );
+  assert.equal(
+    JSON.parse(readGenerated(simple, 'package.json')).dependencies[
+      '@admin9-labs/admin9-ui'
+    ],
+    '0.3.0'
+  );
+  assert.equal(fs.existsSync(path.join(simple, 'src/api/media.ts')), false);
+  assert.equal(fs.existsSync(path.join(simple, 'src/mock/media.ts')), false);
+  assert.equal(
+    fs.existsSync(path.join(simple, 'src/views/list/media-library')),
+    false
+  );
+  assert.equal(
+    fs.existsSync(path.join(simple, 'src/router/routes/modules/list.ts')),
+    false
+  );
+  assert.equal(
+    fs.existsSync(path.join(simple, 'src/views/form/group')),
+    false
+  );
+  assert.equal(
+    fs.existsSync(path.join(simple, 'src/views/form/tiptap')),
+    false
+  );
+  assert.doesNotMatch(
+    readGenerated(simple, 'src/mock/index.ts'),
+    /media/
+  );
+  assert.doesNotMatch(
+    readGenerated(simple, 'src/locale/zh-CN.ts'),
+    /menu\.list\.mediaLibrary|mediaLibrary/
   );
   assertNoSimpleMarkers(simple);
 });

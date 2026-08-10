@@ -107,8 +107,13 @@ const simplifyFiles = [
   'views/user/info/components/AccountInfoCard.vue',
 ];
 
+const simpleAccurateFiles = ['src/mock/media.ts'];
+
 const runSimpleMode = () => {
   deleteFiles();
+  simpleAccurateFiles.forEach((file) =>
+    fs.removeSync(path.resolve(projectPath, file))
+  );
   simplifyFiles.forEach((el) => {
     const file = path.resolve(projectPath, path.join('src', el));
     const content = fs.readFileSync(file, 'utf8');

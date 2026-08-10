@@ -41,6 +41,12 @@ export default {
   'navbar.docs': 'Docs',
   'navbar.action.locale': 'Switch to English',
   'menu.form.tiptap': 'Rich Text',
+  /** simple */
+  'menu.list.mediaLibrary': 'Media Library',
+  'mediaLibrary.type.image': 'Images',
+  'mediaLibrary.type.video': 'Videos',
+  'mediaLibrary.type.audio': 'Audio',
+  /** simple end */
   ...localeSettings,
   ...localeMessageBox,
   ...localeLogin,

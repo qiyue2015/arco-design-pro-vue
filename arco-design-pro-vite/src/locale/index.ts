@@ -1,4 +1,5 @@
 import { createI18n } from 'vue-i18n';
+import { messages as admin9UiMessages } from '@admin9-labs/admin9-ui/locale';
 import en from './en-US';
 import cn from './zh-CN';
 
@@ -14,8 +15,8 @@ const i18n = createI18n({
   legacy: false,
   allowComposition: true,
   messages: {
-    'en-US': en,
-    'zh-CN': cn,
+    'en-US': { ...en, ...admin9UiMessages['en-US'] },
+    'zh-CN': { ...cn, ...admin9UiMessages['zh-CN'] },
   },
 });
 

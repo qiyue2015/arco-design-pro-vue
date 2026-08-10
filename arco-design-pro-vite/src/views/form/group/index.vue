@@ -135,29 +135,46 @@
             </a-col>
           </a-row>
         </a-card>
-        <a-card class="general-card" title="图片上传">
+        <a-card class="general-card" :title="$t('groupForm.title.assets')">
           <a-row :gutter="80">
-            <a-col :span="8">
-              <a-form-item label="不限上传数量" field="icon">
-                <ImageGallery v-model="formData.photos" :show-file-list="false">
-                  <template #upload-button>
-                    <a-button size="small">
-                      <template #icon>
-                        <icon-upload />
-                      </template>
-                    </a-button>
-                  </template>
-                </ImageGallery>
+            <a-col :xs="24" :md="12" :xl="6">
+              <a-form-item :label="$t('groupForm.form.label.icon')" field="icon">
+                <AIconPicker v-model="formData.icon" allow-clear />
               </a-form-item>
             </a-col>
-            <a-col :span="8">
-              <a-form-item label="上传2张" field="icon">
-                <ImageGallery v-model="formData.photos" :limit="2" list-type="picture" />
+            <a-col :xs="24" :md="12" :xl="6">
+              <a-form-item :label="$t('groupForm.form.label.cover')" field="cover">
+                <AMediaPicker
+                  v-model="formData.cover"
+                  media-type="image"
+                  :service="mediaLibraryAdapter"
+                  :can-upload="true"
+                  :show-file-list="false"
+                />
               </a-form-item>
             </a-col>
-            <a-col :span="8">
-              <a-form-item label="宽屏 16:9" field="icon">
-                <ImageGallery v-model="formData.photos" :limit="2" list-type="picture-card" />
+            <a-col :xs="24" :md="12" :xl="6">
+              <a-form-item :label="$t('groupForm.form.label.gallery')" field="photos">
+                <AMediaPicker
+                  v-model="formData.photos"
+                  media-type="image"
+                  multiple
+                  :limit="2"
+                  :service="mediaLibraryAdapter"
+                  :can-upload="true"
+                />
+              </a-form-item>
+            </a-col>
+            <a-col :xs="24" :md="12" :xl="6">
+              <a-form-item :label="$t('groupForm.form.label.banner')" field="banner">
+                <AMediaPicker
+                  v-model="formData.banner"
+                  media-type="image"
+                  multiple
+                  :limit="2"
+                  :service="mediaLibraryAdapter"
+                  :can-upload="true"
+                />
               </a-form-item>
             </a-col>
           </a-row>
@@ -188,11 +205,20 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import { FormInstance } from '@arco-design/web-vue';
+  import { AIconPicker, AMediaPicker } from '@admin9-labs/admin9-ui';
+  import type { MediaItem } from '@admin9-labs/admin9-ui';
   import useLoading from '@/hooks/loading';
+  import mediaLibraryAdapter from '@/api/media';
 
-  const formData = ref({
+  const formData = ref<{
+    icon: string;
+    cover?: MediaItem;
+    photos: MediaItem[];
+    banner: MediaItem[];
+  }>({
     icon: '',
     photos: [],
+    banner: [],
   });
   const formRef = ref<FormInstance>();
   const { loading, setLoading } = useLoading();

@@ -32,6 +32,16 @@ const LIST: AppRouteRecordRaw = {
         roles: ['*'],
       },
     },
+    {
+      path: 'media-library',
+      name: 'MediaLibrary',
+      component: () => import('@/views/list/media-library/index.vue'),
+      meta: {
+        locale: 'menu.list.mediaLibrary',
+        requiresAuth: true,
+        roles: ['admin'],
+      },
+    },
   ],
 };
 

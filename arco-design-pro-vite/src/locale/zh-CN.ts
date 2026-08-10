@@ -41,6 +41,12 @@ export default {
   'navbar.docs': '文档中心',
   'navbar.action.locale': '切换为中文',
   'menu.form.tiptap': '富文本',
+  /** simple */
+  'menu.list.mediaLibrary': '素材管理',
+  'mediaLibrary.type.image': '图片',
+  'mediaLibrary.type.video': '视频',
+  'mediaLibrary.type.audio': '音频',
+  /** simple end */
   ...localeSettings,
   ...localeMessageBox,
   ...localeLogin,
