@@ -946,13 +946,25 @@ test('publish never force-pushes and propagates a non-fast-forward failure', () 
   assert.equal(remoteHasRef(remote, 'refs/tags/v1.1.0'), false);
 });
 
-test('workflow uses the tested publisher and immutable action pins', () => {
+test('workflow pins Node 24 before Node commands and uses the tested publisher', () => {
   const workflow = fs.readFileSync(
     path.join(repositoryRoot, '.github/workflows/publish-releases.yml'),
     'utf8'
   );
+  const nodeVersion = fs.readFileSync(
+    path.join(repositoryRoot, '.node-version'),
+    'utf8'
+  );
+  const sourcePackage = JSON.parse(
+    fs.readFileSync(
+      path.join(repositoryRoot, 'arco-design-pro-vite/package.json'),
+      'utf8'
+    )
+  );
   assert.doesNotMatch(workflow, /workflow_dispatch|release:\s*\n/);
   assert.match(workflow, /steps\.plan\.outputs\.publish_needed == 'true'/);
+  assert.equal(nodeVersion.trim(), '24');
+  assert.equal(sourcePackage.engines.node, '>=14.0.0');
   assert.match(
     workflow,
     /actions\/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4\.4\.0/
@@ -964,6 +976,41 @@ test('workflow uses the tested publisher and immutable action pins', () => {
   assert.match(
     workflow,
     /actions\/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4\.4\.0/
+  );
+  assert.equal(workflow.match(/node-version-file: \.node-version/g)?.length, 2);
+  assert.doesNotMatch(workflow, /node-version:\s*20/);
+  const planningNodeSetup = workflow.indexOf(
+    '- name: Set up Node.js for release planning'
+  );
+  const releasePlan = workflow.indexOf('- name: Check release version');
+  const pnpmSetup = workflow.indexOf('- name: Set up pnpm');
+  const cacheSetup = workflow.indexOf('- name: Restore pnpm cache');
+  assert.ok(
+    planningNodeSetup !== -1 && planningNodeSetup < releasePlan,
+    'Node.js must be set up before release planning'
+  );
+  assert.doesNotMatch(
+    workflow.slice(planningNodeSetup, releasePlan),
+    /^\s+if:/m,
+    'release planning must always use the declared Node.js version'
+  );
+  assert.ok(
+    releasePlan < pnpmSetup && pnpmSetup < cacheSetup,
+    'conditional pnpm setup must remain after release planning and before cache restore'
+  );
+  assert.match(
+    workflow,
+    /- name: Set up pnpm\n\s+if: steps\.plan\.outputs\.publish_needed == 'true'/
+  );
+  assert.match(
+    workflow,
+    /- name: Restore pnpm cache\n\s+if: steps\.plan\.outputs\.publish_needed == 'true'/
+  );
+  const nodeCommands = [...workflow.matchAll(/^\s+(?:run:\s+)?node(?:\s|$)/gm)];
+  assert.ok(nodeCommands.length > 0);
+  assert.ok(
+    nodeCommands.every(({ index }) => planningNodeSetup < index),
+    'every shell node command must run after Node.js setup'
   );
   assert.equal(
     workflow.match(/node scripts\/release\/publish-release\.mjs/g)?.length,
