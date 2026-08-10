@@ -284,7 +284,7 @@ test('vite generator keeps full-only features out of the simple edition', () => 
     JSON.parse(readGenerated(full, 'package.json')).dependencies[
       '@admin9-labs/admin9-ui'
     ],
-    '0.3.0'
+    '^0.3.0'
   );
   assert.equal(fs.existsSync(path.join(full, 'src/api/media.ts')), true);
   assert.equal(fs.existsSync(path.join(full, 'src/mock/media.ts')), true);
@@ -361,7 +361,7 @@ test('vite generator keeps full-only features out of the simple edition', () => 
     JSON.parse(readGenerated(simple, 'package.json')).dependencies[
       '@admin9-labs/admin9-ui'
     ],
-    '0.3.0'
+    '^0.3.0'
   );
   assert.equal(fs.existsSync(path.join(simple, 'src/api/media.ts')), false);
   assert.equal(fs.existsSync(path.join(simple, 'src/mock/media.ts')), false);
