@@ -39,6 +39,21 @@ $ npm i arco-cli@latest pnpm -g
 $ arco init my-project
 ```
 
+## Environment configuration
+
+The source template only declares environment variables in `arco-design-pro-vite/.env.example`; it does not distribute development or production settings. Generated projects may commit their own `.env.development`, `.env.production`, or `.env.staging` files. Developer- and machine-specific overrides belong in `.env.*.local`, which is ignored by the existing `*.local` rule.
+
+| File or source           | Owner                             | Commit   |
+| ------------------------ | --------------------------------- | -------- |
+| `.env.example`           | Source template                   | Yes      |
+| `.env.development`       | Downstream project                | Optional |
+| `.env.production`        | Downstream project                | Optional |
+| `.env.staging`           | Downstream project when needed    | Optional |
+| `.env.*.local`           | Developer or deployment host      | No       |
+| GitHub Actions Variables | Downstream deployment environment | No       |
+
+Vite does not load `.env.example` automatically. Every `VITE_*` variable is included in browser assets and must not contain server-side secrets. `VITE_API_BASE_URL` falls back to `/api` when unset. `VITE_QQ_MAP_KEY` is a browser credential, so each deployment must use its own domain restrictions, minimum API permissions, quotas, and alerts. Process environment variables supplied by Actions override public defaults in a downstream `.env.production` file.
+
 ## 🔗 Link
 
 - [Arco Design Pro](https://pro.arco.design)

@@ -1,5 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import environmentFiles from '../environment-files.js';
+
+const { ENV_EXAMPLE, isEnvironmentFileName } = environmentFiles;
 
 const SEMVER_PATTERN =
   /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[0-9A-Za-z.-]+)?$/;
@@ -123,5 +126,34 @@ export function appendGitHubOutput(filePath, values) {
 export function assertSourceCommit(value) {
   if (!/^[0-9a-f]{40}$/i.test(value || '')) {
     throw new Error(`Source commit must be a full 40-character SHA: ${value}`);
+  }
+}
+
+export function findUnexpectedGeneratedEnvironmentFiles(directory) {
+  const resolvedDirectory = path.resolve(directory);
+  if (!fs.existsSync(resolvedDirectory)) {
+    throw new Error(`Generated directory does not exist: ${resolvedDirectory}`);
+  }
+  if (!fs.statSync(resolvedDirectory).isDirectory()) {
+    throw new Error(`Generated path must be a directory: ${resolvedDirectory}`);
+  }
+
+  return fs
+    .readdirSync(resolvedDirectory, { withFileTypes: true })
+    .filter(
+      (entry) =>
+        isEnvironmentFileName(entry.name) &&
+        (entry.name !== ENV_EXAMPLE || !entry.isFile())
+    )
+    .map((entry) => entry.name)
+    .sort();
+}
+
+export function assertGeneratedEnvironmentFiles(directory) {
+  const unexpectedFiles = findUnexpectedGeneratedEnvironmentFiles(directory);
+  if (unexpectedFiles.length) {
+    throw new Error(
+      `Unexpected generated environment files: ${unexpectedFiles.join(', ')}`
+    );
   }
 }

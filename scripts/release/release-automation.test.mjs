@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
+import { createRequire } from 'node:module';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 
@@ -11,6 +12,8 @@ const repositoryRoot = path.resolve(
   '../..'
 );
 const releaseScripts = path.join(repositoryRoot, 'scripts/release');
+const require = createRequire(import.meta.url);
+const { shouldCopyTemplatePath } = require('../environment-files.js');
 
 function run(command, args, options = {}) {
   const result = spawnSync(command, args, {
@@ -218,6 +221,22 @@ function createSourceHistory(directory) {
   return { base, head };
 }
 
+test('template environment filter only distributes the example file', () => {
+  assert.equal(shouldCopyTemplatePath('.env.example'), true);
+  [
+    '.env',
+    '.env.local',
+    '.env.development',
+    '.env.development.local',
+    '.env.production',
+    '.env.production.local',
+    '.env.staging',
+  ].forEach((relativePath) => {
+    assert.equal(shouldCopyTemplatePath(relativePath), false, relativePath);
+  });
+  assert.equal(shouldCopyTemplatePath('config/.env.production'), true);
+});
+
 test('vite generator keeps full-only features out of the simple edition', () => {
   const directory = makeTempDirectory('vite-generator-identity');
   const generator = path.join(repositoryRoot, 'scripts/vite.js');
@@ -239,6 +258,26 @@ test('vite generator keeps full-only features out of the simple edition', () => 
   };
   const readGenerated = (projectPath, relativePath) =>
     fs.readFileSync(path.join(projectPath, relativePath), 'utf8');
+
+  [full, simple].forEach((projectPath) => {
+    assert.equal(fs.existsSync(path.join(projectPath, '.env.example')), true);
+    assert.equal(
+      fs.existsSync(path.join(projectPath, '.env.development')),
+      false
+    );
+    assert.equal(
+      fs.existsSync(path.join(projectPath, '.env.production')),
+      false
+    );
+    assert.match(
+      readGenerated(projectPath, '.env.example'),
+      /VITE_API_BASE_URL=\n/
+    );
+    assert.match(
+      readGenerated(projectPath, '.env.example'),
+      /VITE_QQ_MAP_KEY=\n/
+    );
+  });
 
   assert.equal(
     fs.existsSync(path.join(full, 'src/views/user/authentication/index.vue')),
@@ -668,6 +707,119 @@ test('safe sync preserves owned files, removes stale files, and excludes artifac
   );
 });
 
+test('generated environment validation rejects file names without exposing contents', () => {
+  const directory = makeTempDirectory('generated-env-validation');
+  writeJson(path.join(directory, 'package.json'), { name: 'generated' });
+  write(path.join(directory, '.env.example'), 'VITE_QQ_MAP_KEY=\n');
+
+  const valid = runNode('validate-generated-env.mjs', [
+    '--directory',
+    directory,
+  ]);
+  assert.equal(JSON.parse(valid.stdout).valid, true);
+
+  const secretValue = 'must-not-appear-in-errors';
+  write(
+    path.join(directory, '.env.production'),
+    `VITE_QQ_MAP_KEY=${secretValue}\n`
+  );
+  const invalid = spawnSync(
+    process.execPath,
+    [
+      path.join(releaseScripts, 'validate-generated-env.mjs'),
+      '--directory',
+      directory,
+    ],
+    { encoding: 'utf8' }
+  );
+  assert.notEqual(invalid.status, 0);
+  assert.match(
+    invalid.stderr,
+    /Unexpected generated environment files: \.env\.production/
+  );
+  assert.doesNotMatch(invalid.stderr, new RegExp(secretValue));
+});
+
+test('safe sync retires generated env files then preserves downstream replacements', () => {
+  const directory = makeTempDirectory('release-env-migration');
+  const generated = path.join(directory, 'generated');
+  const target = path.join(directory, 'target');
+  const configPath = createConfig(directory);
+  const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+  config.editions.simple.preservePaths.push('.env.staging');
+  writeJson(configPath, config);
+
+  const sourceCommit = '8'.repeat(40);
+  const metadataPath = path.join(directory, 'metadata.json');
+  writeJson(metadataPath, {
+    schemaVersion: 1,
+    version: '1.1.0',
+    sourceRepository: 'owner/source',
+    sourceCommit,
+    previousRelease: null,
+  });
+  writeJson(path.join(generated, 'package.json'), { name: 'generated' });
+  write(path.join(generated, '.env.example'), 'VITE_QQ_MAP_KEY=\n');
+
+  initRepository(target);
+  write(path.join(target, '.env.development'), 'legacy development\n');
+  write(path.join(target, '.env.production'), 'legacy production\n');
+  write(path.join(target, '.env.staging'), 'target staging\n');
+  writeJson(path.join(target, '.release-manifest.json'), {
+    schemaVersion: 1,
+    edition: 'simple',
+    files: [
+      '.env.development',
+      '.env.production',
+      '.env.staging',
+      'package.json',
+    ],
+  });
+
+  const sync = () =>
+    JSON.parse(
+      runNode('sync-generated.mjs', [
+        '--config',
+        configPath,
+        '--generated',
+        generated,
+        '--target',
+        target,
+        '--edition',
+        'simple',
+        '--source-commit',
+        sourceCommit,
+        '--metadata',
+        metadataPath,
+      ]).stdout
+    );
+
+  const migrated = sync();
+  assert.equal(migrated.changed, true);
+  assert.equal(fs.existsSync(path.join(target, '.env.development')), false);
+  assert.equal(fs.existsSync(path.join(target, '.env.production')), false);
+  assert.equal(
+    fs.readFileSync(path.join(target, '.env.staging'), 'utf8'),
+    'target staging\n'
+  );
+
+  const manifest = JSON.parse(
+    fs.readFileSync(path.join(target, '.release-manifest.json'), 'utf8')
+  );
+  assert.equal(manifest.files.includes('.env.example'), true);
+  assert.equal(manifest.files.includes('.env.development'), false);
+  assert.equal(manifest.files.includes('.env.production'), false);
+  assert.equal(manifest.files.includes('.env.staging'), false);
+
+  write(path.join(target, '.env.production'), 'downstream production\n');
+  const repeated = sync();
+  assert.equal(repeated.changed, false);
+  assert.equal(
+    fs.readFileSync(path.join(target, '.env.production'), 'utf8'),
+    'downstream production\n'
+  );
+});
+
 test('safe sync rejects an empty generated directory', () => {
   const directory = makeTempDirectory('release-empty');
   const generated = path.join(directory, 'generated');
@@ -1019,5 +1171,21 @@ test('workflow pins Node 24 before Node commands and uses the tested publisher',
     'Generate both editions in temporary directories'
   );
   assert.ok(releaseTest !== -1 && releaseTest < generation);
+  const environmentValidation = workflow.indexOf(
+    'Validate generated environment files'
+  );
+  const editionBuild = workflow.indexOf(
+    'Install, type-check, and build both editions'
+  );
+  assert.ok(
+    generation < environmentValidation && environmentValidation < editionBuild,
+    'generated environment files must be checked before builds'
+  );
+  assert.equal(
+    workflow.match(/node scripts\/release\/validate-generated-env\.mjs/g)
+      ?.length,
+    2
+  );
+  assert.doesNotMatch(workflow, /VITE_API_BASE_URL|VITE_QQ_MAP_KEY/);
   assert.doesNotMatch(workflow, /git\s+(?:-C\s+[^\s]+\s+)?push/);
 });

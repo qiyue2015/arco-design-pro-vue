@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { computed, reactive, ref } from 'vue';
-  import { CascaderOption } from '@arco-design/web-vue';
+  import { CascaderOption, Message } from '@arco-design/web-vue';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import { jsonp } from 'vue-jsonp';
   import { useLoading, useVisible } from '@/hooks';
@@ -10,13 +10,29 @@
   const props = defineProps({
     modelValue: {
       type: String,
-      default: null,
+      default: '',
     },
     appKey: {
       type: String,
-      default: null,
+      default: '',
     },
   });
+
+  const isConfigured = computed(() => Boolean(props.appKey.trim()));
+  const mapErrorMessage = '腾讯地图服务暂时不可用';
+
+  const getAppKey = () => {
+    const appKey = props.appKey.trim();
+    if (!appKey) throw new Error('Tencent Maps key is not configured');
+    return appKey;
+  };
+
+  const assertSuccessfulResponse = (response: any) => {
+    if (!response || response.status !== 0) {
+      throw new Error(response?.message || mapErrorMessage);
+    }
+    return response;
+  };
 
   /**
    * jsonp 获取省市区 district
@@ -25,18 +41,20 @@
     const cacheKey = 'qq-map-district';
     const areaData = localStorage.getItem(cacheKey);
     if (areaData) {
-      return JSON.parse(areaData);
+      try {
+        return JSON.parse(areaData);
+      } catch {
+        localStorage.removeItem(cacheKey);
+      }
     }
 
-    const response = await jsonp('https://apis.map.qq.com/ws/district/v1/list', {
-      key: props.appKey,
-      output: 'jsonp',
-    });
-
-    if (response.status === 0) {
-      localStorage.setItem(cacheKey, JSON.stringify(response));
-    }
-
+    const response = assertSuccessfulResponse(
+      await jsonp('https://apis.map.qq.com/ws/district/v1/list', {
+        key: getAppKey(),
+        output: 'jsonp',
+      })
+    );
+    localStorage.setItem(cacheKey, JSON.stringify(response));
     return response;
   };
 
@@ -46,7 +64,7 @@
    */
   const getCurrentPosition = () => {
     return jsonp('https://apis.map.qq.com/ws/location/v1/ip', {
-      key: props.appKey,
+      key: getAppKey(),
       output: 'jsonp',
     });
   };
@@ -58,7 +76,7 @@
   const getPlaceSuggestions = (param: any) => {
     return jsonp('https://apis.map.qq.com/ws/place/v1/suggestion', {
       ...param,
-      key: props.appKey,
+      key: getAppKey(),
       region_fix: 1,
       policy: 1,
       output: 'jsonp',
@@ -74,15 +92,17 @@
   const cascaderLoading = ref(false);
   const cascaderOptions = ref<CascaderOption[]>([]);
   const initCascaderData = async () => {
-    if (cascaderOptions.value.length === 0) {
+    if (cascaderOptions.value.length > 0) return;
+
+    try {
       cascaderLoading.value = true;
       const response = await getDistrict();
-      const provinceData = response.result[0];
-      const cityData = response.result[1];
-      const districtData = response.result[2];
-      cascaderLoading.value = false;
+      const [provinceData, cityData, districtData] = response.result || [];
+      if (![provinceData, cityData, districtData].every(Array.isArray)) {
+        throw new Error('Invalid Tencent Maps district response');
+      }
       cascaderOptions.value = provinceData.map((row: any) => {
-        const children = [];
+        const children: CascaderOption[] = [];
         for (let i = row.cidx[0]; i <= row.cidx[1]; i += 1) {
           // 城市代码，取前4位
           const cityCode = cityData[i].id.toString().slice(0, 4);
@@ -118,6 +138,11 @@
           children,
         };
       });
+    } catch {
+      cascaderOptions.value = [];
+      Message.error(mapErrorMessage);
+    } finally {
+      cascaderLoading.value = false;
     }
   };
 
@@ -133,9 +158,16 @@
   const fetchData = async () => {
     try {
       setLoading(true);
-      const { data, count } = await getPlaceSuggestions({ ...query, ...formData.value });
+      const { data, count } = assertSuccessfulResponse(await getPlaceSuggestions({ ...query, ...formData.value }));
+      if (!Array.isArray(data) || typeof count !== 'number') {
+        throw new Error('Invalid Tencent Maps suggestion response');
+      }
       pagination.total = count;
       addressList.value = data;
+    } catch {
+      pagination.total = 0;
+      addressList.value = [];
+      Message.error(mapErrorMessage);
     } finally {
       setLoading(false);
     }
@@ -154,13 +186,18 @@
     setVisible(false);
   };
 
-  const openModal = () => {
+  const openModal = async () => {
+    if (!isConfigured.value) return;
+
     setVisible(true);
-    getCurrentPosition().then(({ result }) => {
-      formData.value.region = result?.ad_info.district;
-      formData.value.areaCode = String(result?.ad_info.adcode);
-      initCascaderData();
-    });
+    try {
+      const { result } = assertSuccessfulResponse(await getCurrentPosition());
+      formData.value.region = result?.ad_info?.district || '';
+      formData.value.areaCode = result?.ad_info?.adcode ? String(result.ad_info.adcode) : '';
+    } catch {
+      Message.error(mapErrorMessage);
+    }
+    await initCascaderData();
   };
 </script>
 
@@ -168,8 +205,9 @@
   <div class="qq-map-container">
     <a-input-search
       v-model="location"
-      placeholder="请从地图选择坐标"
+      :placeholder="isConfigured ? '请从地图选择坐标' : '未配置腾讯地图 Key'"
       button-text="选择"
+      :disabled="!isConfigured"
       search-button
       readonly
       @search="openModal"

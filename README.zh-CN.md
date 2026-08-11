@@ -43,6 +43,21 @@ $ npm i arco-cli@latest yarn -g
 $ arco init my-project
 ```
 
+## 环境配置
+
+母模板只通过 `arco-design-pro-vite/.env.example` 声明环境变量，不分发实际的开发或生产配置。生成后的项目可以自行提交 `.env.development`、`.env.production` 或 `.env.staging`；开发者和部署机器的私有覆盖应写入被 `*.local` 规则忽略的 `.env.*.local`。
+
+| 文件或来源               | 所有者           | 是否提交 |
+| ------------------------ | ---------------- | -------- |
+| `.env.example`           | 母模板           | 是       |
+| `.env.development`       | 下游项目         | 可提交   |
+| `.env.production`        | 下游项目         | 可提交   |
+| `.env.staging`           | 有需要的下游项目 | 可提交   |
+| `.env.*.local`           | 开发者或部署机器 | 否       |
+| GitHub Actions Variables | 对应下游部署环境 | 否       |
+
+`.env.example` 不会被 Vite 自动加载。所有 `VITE_*` 变量都会进入浏览器产物，不得用于服务端密钥。`VITE_API_BASE_URL` 未设置时默认使用 `/api`；`VITE_QQ_MAP_KEY` 是浏览器端凭据，应由各部署项目分别配置域名白名单、最小接口权限、额度和告警。Actions 进程环境变量可覆盖下游 `.env.production` 中的公共默认值。
+
 ## 🔗 Link
 
 - [Arco Design Pro 官网](https://pro.arco.design)

@@ -86,6 +86,14 @@ jobs:
           echo "full_path=$full_path" >> "$GITHUB_OUTPUT"
           echo "simple_path=$simple_path" >> "$GITHUB_OUTPUT"
 
+      - name: Validate generated environment files
+        if: steps.plan.outputs.publish_needed == 'true'
+        run: |
+          node scripts/release/validate-generated-env.mjs \
+            --directory "${{ steps.generated.outputs.full_path }}"
+          node scripts/release/validate-generated-env.mjs \
+            --directory "${{ steps.generated.outputs.simple_path }}"
+
       - name: Install, type-check, and build both editions
         if: steps.plan.outputs.publish_needed == 'true'
         env:

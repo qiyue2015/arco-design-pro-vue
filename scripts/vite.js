@@ -3,6 +3,7 @@ const fs = require('fs-extra');
 const minimist = require('minimist');
 const prettier = require('prettier');
 const prettierOpt = require('./../arco-design-pro-vite/.prettierrc.js');
+const { shouldCopyTemplatePath } = require('./environment-files');
 
 const params = minimist(process.argv.slice(2));
 const isSimple = params.simple;
@@ -35,7 +36,9 @@ const maps = {
 };
 
 fs.copySync(templatePath, projectPath, {
-  filter: (src) => !src.startsWith(path.resolve(templatePath, 'node_modules')),
+  filter: (src) =>
+    !src.startsWith(path.resolve(templatePath, 'node_modules')) &&
+    shouldCopyTemplatePath(path.relative(templatePath, src)),
 });
 
 const gitignorePath = path.resolve(

@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {
   appendGitHubOutput,
+  assertGeneratedEnvironmentFiles,
   assertSafeRelativePath,
   assertSourceCommit,
   loadReleaseConfig,
@@ -54,6 +55,7 @@ if (
     `Generated directory must contain package.json: ${generatedRoot}`
   );
 }
+assertGeneratedEnvironmentFiles(generatedRoot);
 if (!fs.existsSync(path.join(targetRoot, '.git'))) {
   throw new Error(`Target is not a Git checkout: ${targetRoot}`);
 }
