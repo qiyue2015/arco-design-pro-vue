@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "@admin9-labs/admin9-ui": "^0.3.0",
-    "@arco-design/web-vue": "^2.57.0",
+    "@arco-design/web-vue": "^2.58.0",
     "@vueuse/core": "^9.13.0",
     "axios": "^0.24.0",
     "dayjs": "^1.11.13",
@@ -46,7 +46,7 @@
     "pinia-plugin-persistedstate": "^4.4.1",
     "query-string": "^8.2.0",
     "sortablejs": "^1.15.6",
-    "vue": "^3.5.18",
+    "vue": "^3.5.41",
     "vue-i18n": "^9.14.5",
     "vue-jsonp": "^2.1.0",
     "vue-router": "^4.5.1"
@@ -105,6 +105,10 @@
     "node": ">=14.0.0"
   },
   "resolutions": {
+    "@vue/compiler-core": "3.5.41",
+    "@vue/compiler-dom": "3.5.41",
+    "@vue/compiler-sfc": "3.5.41",
+    "@vue/shared": "3.5.41",
     "bin-wrapper": "npm:bin-wrapper-china",
     "gifsicle": "5.2.0",
     "rollup": "^2.79.2"

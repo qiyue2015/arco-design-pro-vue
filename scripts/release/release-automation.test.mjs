@@ -280,12 +280,12 @@ test('vite generator keeps full-only features out of the simple edition', () => 
     readGenerated(full, relativeFiles.storeTypes),
     /is_identity_verified/
   );
-  assert.equal(
-    JSON.parse(readGenerated(full, 'package.json')).dependencies[
-      '@admin9-labs/admin9-ui'
-    ],
-    '^0.3.0'
-  );
+  const fullDependencies = JSON.parse(
+    readGenerated(full, 'package.json')
+  ).dependencies;
+  assert.equal(fullDependencies['@admin9-labs/admin9-ui'], '^0.3.0');
+  assert.equal(fullDependencies['@arco-design/web-vue'], '^2.58.0');
+  assert.equal(fullDependencies.vue, '^3.5.41');
   assert.equal(fs.existsSync(path.join(full, 'src/api/media.ts')), true);
   assert.equal(fs.existsSync(path.join(full, 'src/mock/media.ts')), true);
   assert.equal(
@@ -357,12 +357,12 @@ test('vite generator keeps full-only features out of the simple edition', () => 
     readGenerated(simple, relativeFiles.storeTypes),
     /is_identity_verified/
   );
-  assert.equal(
-    JSON.parse(readGenerated(simple, 'package.json')).dependencies[
-      '@admin9-labs/admin9-ui'
-    ],
-    '^0.3.0'
-  );
+  const simpleDependencies = JSON.parse(
+    readGenerated(simple, 'package.json')
+  ).dependencies;
+  assert.equal(simpleDependencies['@admin9-labs/admin9-ui'], '^0.3.0');
+  assert.equal(simpleDependencies['@arco-design/web-vue'], '^2.58.0');
+  assert.equal(simpleDependencies.vue, '^3.5.41');
   assert.equal(fs.existsSync(path.join(simple, 'src/api/media.ts')), false);
   assert.equal(fs.existsSync(path.join(simple, 'src/mock/media.ts')), false);
   assert.equal(
