@@ -105,10 +105,6 @@
     "node": ">=14.0.0"
   },
   "resolutions": {
-    "@vue/compiler-core": "3.5.41",
-    "@vue/compiler-dom": "3.5.41",
-    "@vue/compiler-sfc": "3.5.41",
-    "@vue/shared": "3.5.41",
     "bin-wrapper": "npm:bin-wrapper-china",
     "gifsicle": "5.2.0",
     "rollup": "^2.79.2"
