@@ -59,7 +59,7 @@
   });
 
   // 登录方式
-  const loginType = ref<'password' | 'phone'>('password');
+  const loginType = ref<'password' | 'phone' | 'mail'>('password');
 
   // 注册方式
   const registerType = ref<'password' | 'phone'>('phone');

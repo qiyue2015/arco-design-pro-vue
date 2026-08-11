@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
   import { ref } from 'vue';
-  import { FormInstance } from '@arco-design/web-vue';
+  import type { FieldRule, FormInstance } from '@arco-design/web-vue';
   import { useVisible } from '@/hooks';
   import InputVerifyCode from '@/components/input-verify-code/index.vue';
 
@@ -22,14 +22,15 @@
 
   const formRef = ref<FormInstance>();
   const formData = ref({ email: '', code: '' });
-  const formRules = {
+  const formRules: Record<keyof typeof formData.value, FieldRule<string>[]> = {
     email: [{ type: 'email', message: '请输入正确的邮箱地址' }],
     code: [{ required: true, message: '请输入验证码' }],
   };
 
   const onSave = async () => {
     try {
-      if (await formRef.value.validate()) {
+      const form = formRef.value;
+      if (!form || (await form.validate())) {
         return false;
       }
       return true;

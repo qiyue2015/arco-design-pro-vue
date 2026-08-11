@@ -2,7 +2,7 @@
   <div class="login-container">
     <a-form ref="loginForm" :model="userInfo" :rules="rules" layout="vertical" size="large" @submit-success="handleSubmit">
       <a-form-item field="email" :validate-trigger="['change', 'blur']" hide-label>
-        <a-input v-model="userInfo.email" type="email" placeholder="邮箱地址" allow-clear />
+        <a-input v-model="userInfo.email" :input-attrs="{ type: 'email' }" placeholder="邮箱地址" allow-clear />
       </a-form-item>
       <a-form-item field="code" :validate-trigger="['change', 'blur']" hide-label>
         <InputVerifyCode v-model="userInfo.code" :account="userInfo.email" type="email" />
@@ -23,6 +23,7 @@
   import { useRouter } from 'vue-router';
   import { DEFAULT_ROUTE_NAME } from '@/router/constants';
   import { Message } from '@arco-design/web-vue';
+  import type { FieldRule } from '@arco-design/web-vue';
   import InputVerifyCode from '@/components/input-verify-code/index.vue';
   import AgreementNotice from './AgreementNotice.vue';
 
@@ -36,7 +37,7 @@
     code: '1234',
   });
 
-  const rules = {
+  const rules: Record<keyof typeof userInfo, FieldRule<string>[]> = {
     email: [
       {
         required: true,

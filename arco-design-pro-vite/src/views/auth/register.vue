@@ -14,13 +14,19 @@
   import PhoneRegisterForm from './components/PhoneRegisterForm.vue';
   import PasswordRegisterForm from './components/PasswordRegisterForm.vue';
 
-  const props = defineProps<{ registerType: 'phone' | 'password' }>();
-  const emits = defineEmits(['update:registerType']);
+  type RegisterType = 'phone' | 'password';
+
+  const props = defineProps<{ registerType: RegisterType }>();
+  const emits = defineEmits<{
+    (event: 'update:registerType', value: RegisterType): void;
+  }>();
 
   const registerType = computed(() => props.registerType);
 
-  function onTabChange(key: string) {
-    emits('update:registerType', key as 'phone' | 'password');
+  function onTabChange(key: string | number) {
+    if (key === 'phone' || key === 'password') {
+      emits('update:registerType', key);
+    }
   }
 </script>
 

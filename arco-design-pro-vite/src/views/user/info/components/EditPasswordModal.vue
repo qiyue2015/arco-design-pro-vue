@@ -70,7 +70,8 @@
 
   const onSave = async () => {
     try {
-      if (await formRef.value.validate()) {
+      const form = formRef.value;
+      if (!form || (await form.validate())) {
         return false;
       }
       return true;

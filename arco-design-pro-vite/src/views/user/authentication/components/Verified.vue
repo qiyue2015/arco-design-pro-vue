@@ -35,10 +35,11 @@
 
 <script lang="ts" setup>
   import { reactive } from 'vue';
+  import type { TableColumnData } from '@arco-design/web-vue';
   import AuthSuccessIcon from '../icons/auth-success.svg?url';
   import AuthBannerIcon from '../icons/auth-banner.svg?url';
 
-  const columns = [
+  const columns: TableColumnData[] = [
     { title: '认证类型', dataIndex: 'type', width: 100 },
     { title: '提交时间', dataIndex: 'created_at', width: 180 },
     { title: '完成时间', dataIndex: 'completed_at', width: 180 },

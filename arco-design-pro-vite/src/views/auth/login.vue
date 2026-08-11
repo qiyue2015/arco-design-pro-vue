@@ -18,13 +18,19 @@
   import PasswordLoginForm from './components/PasswordLoginForm.vue';
   import MailLoginForm from './components/MailLoginForm.vue';
 
-  const props = defineProps<{ loginType: 'phone' | 'password' }>();
-  const emits = defineEmits(['update:loginType']);
+  type LoginType = 'password' | 'phone' | 'mail';
+
+  const props = defineProps<{ loginType: LoginType }>();
+  const emits = defineEmits<{
+    (event: 'update:loginType', value: LoginType): void;
+  }>();
 
   const loginType = computed(() => props.loginType);
 
-  function onTabChange(key: string) {
-    emits('update:loginType', key as 'phone' | 'password');
+  function onTabChange(key: string | number) {
+    if (key === 'password' || key === 'phone' || key === 'mail') {
+      emits('update:loginType', key);
+    }
   }
 </script>
 

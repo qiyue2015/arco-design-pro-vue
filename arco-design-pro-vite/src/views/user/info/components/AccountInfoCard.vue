@@ -17,7 +17,7 @@
               <template #trigger-icon>
                 <icon-camera />
               </template>
-              <img v-if="file.length" :src="file.url" />
+              <img v-if="file.url" :src="file.url" />
             </a-avatar>
           </template>
         </a-upload>
@@ -47,7 +47,8 @@
 
 <script lang="ts" setup>
   import { computed, ref, useAttrs } from 'vue';
-  import { FileItem, Message } from '@arco-design/web-vue';
+  import { Message } from '@arco-design/web-vue';
+  import type { FileItem } from '@arco-design/web-vue';
   import { useUserStore } from '@/store';
   import { getToken } from '@/utils/auth';
   import EditAccountInfoModal from './EditAccountInfoModal.vue';
@@ -60,16 +61,62 @@
   const userInfo = computed(() => userStore.userInfo);
   const file = ref<FileItem>({ uid: '-2', name: 'avatar.png', url: userInfo.value.avatar });
 
-  const onChange = (fileItemList: FileItem[], fileItem: FileItem) => {
-    file.value.url = fileItem.url;
+  interface AvatarUploadResponse {
+    code: number;
+    message: string;
+    data: {
+      url: string;
+    };
+  }
+
+  const parseUploadResponse = (value: unknown): AvatarUploadResponse | undefined => {
+    let response: unknown = value;
+    if (typeof value === 'string') {
+      try {
+        response = JSON.parse(value);
+      } catch {
+        return undefined;
+      }
+    }
+    if (
+      typeof response === 'object' &&
+      response !== null &&
+      'code' in response &&
+      typeof response.code === 'number' &&
+      'message' in response &&
+      typeof response.message === 'string' &&
+      'data' in response &&
+      typeof response.data === 'object' &&
+      response.data !== null &&
+      'url' in response.data &&
+      typeof response.data.url === 'string'
+    ) {
+      return {
+        code: response.code,
+        message: response.message,
+        data: {
+          url: response.data.url,
+        },
+      };
+    }
+    return undefined;
   };
 
-  const onProgress = (currentFile: File) => {
+  const onChange = (_fileItemList: FileItem[], fileItem: FileItem) => {
+    file.value = fileItem;
+  };
+
+  const onProgress = (currentFile: FileItem) => {
     file.value = currentFile;
   };
 
-  const onSuccess = async (response?: any) => {
-    const { code, message, data } = JSON.parse(response.response);
+  const onSuccess = async (currentFile: FileItem) => {
+    file.value = currentFile;
+    const response = parseUploadResponse(currentFile.response);
+    if (!response) {
+      return;
+    }
+    const { code, message, data } = response;
     if (code === 0) {
       file.value.url = data.url;
       userStore.info();
