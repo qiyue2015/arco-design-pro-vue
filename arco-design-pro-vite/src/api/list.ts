@@ -24,7 +24,7 @@ export interface PolicyListRes {
 }
 
 export function queryPolicyList(params: PolicyParams) {
-  return axios.get<PolicyListRes>('/api/list/policy', {
+  return axios.get<PolicyListRes>('list/policy', {
     params,
     paramsSerializer: (obj) => {
       return qs.stringify(obj);
@@ -44,13 +44,13 @@ export interface ServiceRecord {
   expires?: boolean;
 }
 export function queryInspectionList() {
-  return axios.get('/api/list/quality-inspection');
+  return axios.get('list/quality-inspection');
 }
 
 export function queryTheServiceList() {
-  return axios.get('/api/list/the-service');
+  return axios.get('list/the-service');
 }
 
 export function queryRulesPresetList() {
-  return axios.get('/api/list/rules-preset');
+  return axios.get('list/rules-preset');
 }

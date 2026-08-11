@@ -69,11 +69,11 @@ const getMessageList = () => {
 
 setupMock({
   setup: () => {
-    Mock.mock(new RegExp('/api/message/list'), () => {
+    Mock.mock(new RegExp('/message/list'), () => {
       return successResponseWrap(getMessageList());
     });
 
-    Mock.mock(new RegExp('/api/message/read'), (params: { body: string }) => {
+    Mock.mock(new RegExp('/message/read'), (params: { body: string }) => {
       const { ids } = JSON.parse(params.body);
       haveReadIds.push(...(ids || []));
       return successResponseWrap(true);

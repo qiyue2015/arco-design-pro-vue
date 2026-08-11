@@ -12,19 +12,19 @@ export interface LoginRes {
 }
 
 export function login(data: LoginData) {
-  return axios.post<LoginRes>('/api/user/login', data);
+  return axios.post<LoginRes>('user/login', data);
 }
 
 export function logout() {
-  return axios.post<LoginRes>('/api/user/logout');
+  return axios.post<LoginRes>('user/logout');
 }
 
 export function getUserInfo() {
-  return axios.post<UserState>('/api/user/info');
+  return axios.post<UserState>('user/info');
 }
 
 export function getMenuList() {
-  return axios.post<RouteRecordNormalized[]>('/api/user/menu');
+  return axios.post<RouteRecordNormalized[]>('user/menu');
 }
 
 export interface RegisterData {
@@ -35,12 +35,12 @@ export interface RegisterData {
 }
 
 export function register(data: RegisterData) {
-  return axios.post('/api/user/register', data);
+  return axios.post('user/register', data);
 }
 
 // 上传头像
 export function uploadAvatar(data: FormData) {
-  return axios.post('/api/user/upload-avatar', data, {
+  return axios.post('user/upload-avatar', data, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },

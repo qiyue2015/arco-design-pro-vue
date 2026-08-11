@@ -56,7 +56,8 @@
   const attrs = useAttrs();
 
   const token = getToken();
-  const uploadAction = `${import.meta.env.VITE_API_BASE_URL}/api/user/upload-avatar`;
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || '/api';
+  const uploadAction = `${apiBaseUrl.replace(/\/$/, '')}/user/upload-avatar`;
   const userStore = useUserStore();
   const userInfo = computed(() => userStore.userInfo);
   const file = ref<FileItem>({ uid: '-2', name: 'avatar.png', url: userInfo.value.avatar });

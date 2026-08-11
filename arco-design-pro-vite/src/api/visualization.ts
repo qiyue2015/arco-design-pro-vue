@@ -19,7 +19,7 @@ export interface DataChainGrowthRes {
   };
 }
 export function queryDataChainGrowth(data: DataChainGrowth) {
-  return axios.post<DataChainGrowthRes>('/api/data-chain-growth', data);
+  return axios.post<DataChainGrowthRes>('data-chain-growth', data);
 }
 
 export interface PopularAuthorRes {
@@ -32,7 +32,7 @@ export interface PopularAuthorRes {
 }
 
 export function queryPopularAuthor() {
-  return axios.get<PopularAuthorRes>('/api/popular-author/list');
+  return axios.get<PopularAuthorRes>('popular-author/list');
 }
 
 export interface ContentPublishRecord {
@@ -42,11 +42,11 @@ export interface ContentPublishRecord {
 }
 
 export function queryContentPublish() {
-  return axios.get<ContentPublishRecord[]>('/api/content-publish');
+  return axios.get<ContentPublishRecord[]>('content-publish');
 }
 
 export function queryContentPeriodAnalysis() {
-  return axios.post<GeneralChart>('/api/content-period-analysis');
+  return axios.post<GeneralChart>('content-period-analysis');
 }
 
 export interface PublicOpinionAnalysis {
@@ -58,7 +58,7 @@ export interface PublicOpinionAnalysisRes {
   chartData: ChartDataRecord[];
 }
 export function queryPublicOpinionAnalysis(data: DataChainGrowth) {
-  return axios.post<PublicOpinionAnalysisRes>('/api/public-opinion-analysis', data);
+  return axios.post<PublicOpinionAnalysisRes>('public-opinion-analysis', data);
 }
 export interface DataOverviewRes {
   xAxis: string[];
@@ -66,5 +66,5 @@ export interface DataOverviewRes {
 }
 
 export function queryDataOverview() {
-  return axios.post<DataOverviewRes>('/api/data-overview');
+  return axios.post<DataOverviewRes>('data-overview');
 }

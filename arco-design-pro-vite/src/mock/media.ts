@@ -105,7 +105,7 @@ const mediaUrlFor = (mediaType: MediaType) => {
 
 setupMock({
   setup() {
-    Mock.mock(/\/api\/media\/groups(?:\?.*)?$/, 'get', (params: MockParams) => {
+    Mock.mock(/\/media\/groups(?:\?.*)?$/, 'get', (params: MockParams) => {
       const { query } = qs.parseUrl(params.url);
       const mediaType = queryValue(query.media_type) as MediaType;
       const data = groups
@@ -118,7 +118,7 @@ setupMock({
       return successResponseWrap(data);
     });
 
-    Mock.mock(/\/api\/media\/groups(?:\?.*)?$/, 'post', (params: MockParams) => {
+    Mock.mock(/\/media\/groups(?:\?.*)?$/, 'post', (params: MockParams) => {
       const body = parseBody(params);
       const mediaType = body.mediaType as MediaType;
       sequence += 1;
@@ -131,7 +131,7 @@ setupMock({
       return successResponseWrap({ id: group.id, name: group.name, count: 0 });
     });
 
-    Mock.mock(/\/api\/media\/groups\/[^/?]+(?:\?.*)?$/, 'put', (params: MockParams) => {
+    Mock.mock(/\/media\/groups\/[^/?]+(?:\?.*)?$/, 'put', (params: MockParams) => {
       const groupId = params.url.split('?')[0].split('/').pop();
       const body = parseBody(params);
       const group = groups.find((item) => item.id === groupId && item.mediaType === body.mediaType);
@@ -139,7 +139,7 @@ setupMock({
       return successResponseWrap({ id: group?.id, name: group?.name, count: 0 });
     });
 
-    Mock.mock(/\/api\/media\/groups\/[^/?]+(?:\?.*)?$/, 'delete', (params: MockParams) => {
+    Mock.mock(/\/media\/groups\/[^/?]+(?:\?.*)?$/, 'delete', (params: MockParams) => {
       const groupId = params.url.split('?')[0].split('/').pop();
       const body = parseBody(params);
       const index = groups.findIndex((item) => item.id === groupId && item.mediaType === body.mediaType);
@@ -150,7 +150,7 @@ setupMock({
       return successResponseWrap(null);
     });
 
-    Mock.mock(/\/api\/media\/upload(?:\?.*)?$/, 'post', (params: MockParams) => {
+    Mock.mock(/\/media\/upload(?:\?.*)?$/, 'post', (params: MockParams) => {
       const { query } = qs.parseUrl(params.url);
       const mediaType = queryValue(query.media_type) as MediaType;
       const rawGroupId = queryValue(query.group_id) as string | undefined;
@@ -171,7 +171,7 @@ setupMock({
       return successResponseWrap(item);
     });
 
-    Mock.mock(/\/api\/media\/move(?:\?.*)?$/, 'put', (params: MockParams) => {
+    Mock.mock(/\/media\/move(?:\?.*)?$/, 'put', (params: MockParams) => {
       const body = parseBody(params);
       const ids = body.ids || [];
       const movedIds: string[] = [];
@@ -184,7 +184,7 @@ setupMock({
       return successResponseWrap(movedIds);
     });
 
-    Mock.mock(/\/api\/media(?:\?.*)?$/, 'delete', (params: MockParams) => {
+    Mock.mock(/\/media(?:\?.*)?$/, 'delete', (params: MockParams) => {
       const ids = parseBody(params).ids || [];
       const removedIds: string[] = [];
       for (let index = mediaItems.length - 1; index >= 0; index -= 1) {
@@ -197,7 +197,7 @@ setupMock({
       return successResponseWrap(removedIds);
     });
 
-    Mock.mock(/\/api\/media(?:\?.*)?$/, 'get', (params: MockParams) => {
+    Mock.mock(/\/media(?:\?.*)?$/, 'get', (params: MockParams) => {
       const { query } = qs.parseUrl(params.url);
       const page = Number(queryValue(query.page) || 1);
       const pageSize = Number(queryValue(query.page_size) || 24);

@@ -3,7 +3,7 @@ import setupMock, { successResponseWrap } from '@/utils/setup-mock';
 
 setupMock({
   setup() {
-    Mock.mock(new RegExp('/api/user/upload-avatar'), () => {
+    Mock.mock(new RegExp('/user/upload-avatar'), () => {
       return successResponseWrap('ok');
     });
   },

@@ -23,11 +23,11 @@ export interface ArticlesResponse {
 }
 
 export function queryArticles(params: ArticleParams) {
-  return axios.get<any, ArticlesResponse>('/api/articles', {
+  return axios.get<any, ArticlesResponse>('articles', {
     params,
   });
 }
 
 export function queryArticle(id: string) {
-  return axios.get<ArticleRecord>(`/api/articles/${id}`);
+  return axios.get<ArticleRecord>(`articles/${id}`);
 }

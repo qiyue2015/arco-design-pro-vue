@@ -28,7 +28,7 @@ const content = `
 setupMock({
   setup() {
     // Mock article detail
-    Mock.mock(new RegExp('/api/articles/*'), (params: GetParams) => {
+    Mock.mock(new RegExp('/articles/*'), (params: GetParams) => {
       const id = params.url.split('/').pop();
       return successResponseWrap({
         id,
@@ -39,7 +39,7 @@ setupMock({
     });
 
     // Mock article list
-    Mock.mock(new RegExp('/api/articles'), (params: GetParams) => {
+    Mock.mock(new RegExp('/articles'), (params: GetParams) => {
       const { current = 1, pageSize = 10 } = qs.parseUrl(params.url).query;
       const p = current as number;
       const ps = pageSize as number;

@@ -18,5 +18,5 @@ export interface ChannelInfoModel {
 export type UnitChannelModel = BaseInfoModel & ChannelInfoModel;
 
 export function submitChannelForm(data: UnitChannelModel) {
-  return axios.post('/api/channel-form/submit', { data });
+  return axios.post('channel-form/submit', { data });
 }

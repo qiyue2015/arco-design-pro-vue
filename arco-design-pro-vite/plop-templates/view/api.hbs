@@ -21,7 +21,7 @@ export interface {{ properCase name }}ListRes {
 
 // 例表
 export function query{{ properCase name }}List(params: {{ properCase name }}Params) {
-  return axios.get<{{ properCase name }}ListRes>('/api/{{ pluralize name }}', {
+  return axios.get<{{ properCase name }}ListRes>('{{ pluralize name }}', {
     params,
     paramsSerializer: (obj) => {
       return qs.stringify(obj);
@@ -31,22 +31,22 @@ export function query{{ properCase name }}List(params: {{ properCase name }}Para
 
 // 增加
 export function post{{ properCase name }}(data: AnyObject) {
-  return axios.post('/api/{{ pluralize name }}', data);
+  return axios.post('{{ pluralize name }}', data);
 }
 
 // 删除
 export function delete{{ properCase name }}(id: number) {
-  return axios.delete(`/api/{{ pluralize name }}/${id}`);
+  return axios.delete(`{{ pluralize name }}/${id}`);
 }
 
 // 修改
 export function put{{ properCase name }}(id: number, data: AnyObject) {
-  return axios.put(`/api/{{ pluralize name }}/${id}`, data);
+  return axios.put(`{{ pluralize name }}/${id}`, data);
 }
 
 // 详情
 export function get{{ properCase name }}Detail(id: number) {
-  return axios.get(`/api/{{ pluralize name }}/${id}`, {
+  return axios.get(`{{ pluralize name }}/${id}`, {
     params: { id },
   });
 }

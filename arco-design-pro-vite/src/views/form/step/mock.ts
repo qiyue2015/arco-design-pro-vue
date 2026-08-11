@@ -4,7 +4,7 @@ import setupMock, { successResponseWrap } from '@/utils/setup-mock';
 setupMock({
   setup() {
     // submit
-    Mock.mock(new RegExp('/api/channel-form/submit'), () => {
+    Mock.mock(new RegExp('/channel-form/submit'), () => {
       return successResponseWrap('ok');
     });
   },

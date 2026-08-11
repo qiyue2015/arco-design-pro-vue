@@ -102,7 +102,7 @@ const videoList = [
 ];
 setupMock({
   setup() {
-    Mock.mock(new RegExp('/api/content-data'), () => {
+    Mock.mock(new RegExp('/content-data'), () => {
       const presetData = [58, 81, 53, 90, 64, 88, 49, 79];
       const getLineData = () => {
         const count = 8;
@@ -115,7 +115,7 @@ setupMock({
       };
       return successResponseWrap([...getLineData()]);
     });
-    Mock.mock(new RegExp('/api/popular/list'), (params: GetParams) => {
+    Mock.mock(new RegExp('/popular/list'), (params: GetParams) => {
       const { type = 'text' } = qs.parseUrl(params.url).query;
       if (type === 'image') {
         return successResponseWrap([...videoList]);

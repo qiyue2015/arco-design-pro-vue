@@ -22,7 +22,7 @@ export interface MyProjectRecord {
   }[];
 }
 export function queryMyProjectList() {
-  return axios.post('/api/user/my-project/list');
+  return axios.post('user/my-project/list');
 }
 
 export interface MyTeamRecord {
@@ -32,7 +32,7 @@ export interface MyTeamRecord {
   peopleNumber: number;
 }
 export function queryMyTeamList() {
-  return axios.post('/api/user/my-team/list');
+  return axios.post('user/my-team/list');
 }
 
 export interface LatestActivity {
@@ -42,11 +42,11 @@ export interface LatestActivity {
   avatar: string;
 }
 export function queryLatestActivity() {
-  return axios.post<LatestActivity[]>('/api/user/latest-activity');
+  return axios.post<LatestActivity[]>('user/latest-activity');
 }
 
 export function saveUserInfo(data: Partial<BasicInfoModel>) {
-  return axios.post('/api/user/save-info', data);
+  return axios.post('user/save-info', data);
 }
 
 export interface EnterpriseCertificationModel {
@@ -74,7 +74,7 @@ export interface UnitCertification {
 }
 
 export function queryCertification() {
-  return axios.post<UnitCertification>('/api/user/certification');
+  return axios.post<UnitCertification>('user/certification');
 }
 
 export function userUploadApi(
@@ -85,15 +85,15 @@ export function userUploadApi(
   }
 ) {
   // const controller = new AbortController();
-  return axios.post('/api/user/upload', data, config);
+  return axios.post('user/upload', data, config);
 }
 
 // 发送短信验证码
 export function sendPhoneCode(phone: string) {
-  return axios.post('/api/user/send-sms-code', { phone });
+  return axios.post('user/send-sms-code', { phone });
 }
 
 // 修改用户资料
 export function updateUserInfo(data: Partial<BasicInfoModel>) {
-  return axios.post('/api/user/update-info', data);
+  return axios.post('user/update-info', data);
 }

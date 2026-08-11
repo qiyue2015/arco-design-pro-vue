@@ -11,9 +11,7 @@ export interface HttpResponse<T = unknown> {
   data: T;
 }
 
-if (import.meta.env.VITE_API_BASE_URL) {
-  axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;
-}
+axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL || '/api';
 
 axios.interceptors.request.use(
   (config: AxiosRequestConfig) => {
@@ -55,7 +53,7 @@ axios.interceptors.response.use(
         duration: 5 * 1000,
       });
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-      if (res.code === -1 && response.config.url !== '/api/user/info') {
+      if (res.code === -1 && response.config.url !== 'user/info') {
         Modal.error({
           title: 'Confirm logout',
           content: 'You have been logged out, you can cancel to stay on this page, or log in again',
